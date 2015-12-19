@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">GraduateYaoBaoHua</string>
+    <string name="toast_exit">再按一次返回键回到桌面</string>
+    <string name="toast_isinternet">您的网络未连接</string>
+    <string name="tab_main">首页</string>
+    <string name="tab_my">个人</string>
+
+    <string name="footer_hint_load_normal">Load more</string>
+    <string name="footer_hint_load_ready">Release to load more</string>
+
+    <string name="header_hint_refresh_normal">Pull to refresh</string>
+    <string name="header_hint_refresh_ready">Release to refresh</string>
+    <string name="header_hint_refresh_loading">Refreshing&#8230;</string>
+    <string name="header_hint_refresh_time">Time：</string>
+
+
+</resources>

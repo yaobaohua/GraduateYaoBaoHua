@@ -1,0 +1,144 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="my_progress_dialog" parent="@android:style/Theme.Black">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/bg_dialog_loading</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="TextWhiteXLarge" parent="@style/TextXLarge">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="TextThemeXLarge" parent="@style/TextXLarge">
+        <item name="android:textColor">#d49d4a</item>
+    </style>
+
+    <style name="TextGreyXLarge" parent="@style/TextXLarge">
+        <item name="android:textColor">#a2a2a2</item>
+    </style>
+
+    <style name="TextBlackXLarge" parent="@style/TextXLarge">
+        <item name="android:textColor">#333333</item>
+        <item name="android:textColorHint">#aaaaaa</item>
+    </style>
+
+    <style name="TextWhiteLarge" parent="@style/TextLarge">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="TextThemeLarge" parent="@style/TextLarge">
+        <item name="android:textColor">#d49d4a</item>
+    </style>
+
+    <style name="TextGreyLarge" parent="@style/TextLarge">
+        <item name="android:textColor">#a2a2a2</item>
+    </style>
+
+    <style name="TextBlackLarge" parent="@style/TextLarge">
+        <item name="android:textColor">#333333</item>
+        <item name="android:textColorHint">#aaaaaa</item>
+    </style>
+
+    <style name="TextWhiteMedium" parent="@style/TextMedium">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="TextThemeMedium" parent="@style/TextMedium">
+        <item name="android:textColor">#d49d4a</item>
+    </style>
+
+    <style name="TextGreyMedium" parent="@style/TextMedium">
+        <item name="android:textColor">#a2a2a2</item>
+    </style>
+
+    <style name="TextBlackMedium" parent="@style/TextMedium">
+        <item name="android:textColor">#333333</item>
+        <item name="android:textColorHint">#aaaaaa</item>
+    </style>
+
+    <style name="TextWhiteSmall" parent="@style/TextSmall">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="TextThemeSmall" parent="@style/TextSmall">
+        <item name="android:textColor">#d49d4a</item>
+    </style>
+
+    <style name="TextGreySmall" parent="@style/TextSmall">
+        <item name="android:textColor">#a2a2a2</item>
+    </style>
+
+    <style name="TextBlackSmall" parent="@style/TextSmall">
+        <item name="android:textColor">#333333</item>
+        <item name="android:textColorHint">#aaaaaa</item>
+    </style>
+
+    <style name="TextSmall" parent="@android:style/TextAppearance">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextMedium" parent="@android:style/TextAppearance">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TextLarge" parent="@android:style/TextAppearance">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextXLarge" parent="@android:style/TextAppearance">
+        <item name="android:textSize">21sp</item>
+    </style>
+
+    <style name="TextXXLarge" parent="@android:style/TextAppearance">
+        <item name="android:textSize">25sp</item>
+    </style>
+    <style name="TextXXXLarge" parent="@android:style/TextAppearance">
+        <item name="android:textSize">35sp</item>
+    </style>
+    <style name="TextXXXXLarge" parent="@android:style/TextAppearance">
+        <item name="android:textSize">50sp</item>
+    </style>
+
+    <style name="Background">
+        <item name="android:background">#eeeeee</item>
+    </style>
+
+    <style name="MyCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:paddingLeft">5.0dp</item>
+        <item name="android:button">@drawable/checkbox_style</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+</resources>
