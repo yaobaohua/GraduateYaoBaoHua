@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.BitmapUtils;
+import com.yaobaohua.graduateyaobaohua.ui.MyApplication;
 
 
 public class ViewHolder {
@@ -113,7 +114,8 @@ public class ViewHolder {
     public ViewHolder setImageByUrl(Context context, int viewId, String url)
 
     {
-        BitmapUtils bitmap = new BitmapUtils(context);
+        BitmapUtils bitmap = MyApplication.getInstance().bitmapUtils;
+
         bitmap.display((ImageView) getView(viewId), url);
 
         return this;

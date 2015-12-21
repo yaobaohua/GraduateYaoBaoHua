@@ -6,10 +6,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
 import com.lidroid.xutils.BitmapUtils;
 import com.yaobaohua.graduateyaobaohua.R;
+import com.yaobaohua.graduateyaobaohua.common.Constants;
 import com.yaobaohua.graduateyaobaohua.utils.ActivityManager;
+import com.yaobaohua.graduateyaobaohua.utils.LogUtils;
+import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
 
 import java.io.File;
 import java.util.Random;
@@ -32,7 +36,6 @@ public class MyApplication extends Application {
         return instance;
     }
 
-    public String headIconPath = Environment.getExternalStorageDirectory().getPath() + "/banking/";
 
     @Override
     public void onCreate() {
@@ -41,37 +44,28 @@ public class MyApplication extends Application {
         bitmapUtils = new BitmapUtils(this);
         bitmapUtils.configDefaultLoadingImage(R.mipmap.plugin_camera_no_pictures);
         bitmapUtils.configDefaultLoadFailedImage(R.mipmap.plugin_camera_no_pictures);
-        //设置Log是否显示
-//        MULog.setDEBUG(true);
-//        File headIconFile = new File(headIconPath);
-//        if (!headIconFile.exists()) {
-//            headIconFile.mkdirs();
-//        }
-//        //ImageLoader注入
-//        VVImageLoader imageManager = new VVImageLoader();
-//        imageManager.initDefault(getApplicationContext());
-//
-//        MUFileUtil.makeDir(headIconPath);
+
         // 初始化自定义Activity管理器
-       activityManager = ActivityManager.getActivityManager();
+        activityManager = ActivityManager.getActivityManager();
     }
 
     /**
      * 注销登录清除sp缓存
      */
-    public void clearPref() {
-//        ActionCommon.removePreference(getApplicationContext(), ConstantPref.USERNAME);
-//        ActionCommon.removePreference(getApplicationContext(), ConstantPref.USERPWD);
+    public void clearUserNameAndPassWord() {
+
+        SPUtils.remove(getApplicationContext(), Constants.USERNAME);
+        SPUtils.remove(getApplicationContext(), Constants.PASSWORD);
     }
 
     /**
      * 获取版本号
+     *
      * @return
      */
     public String getAppVersion() {
         String versionName = "";
         try {
-            // ---get the package info---
             PackageManager pm = getPackageManager();
             PackageInfo pi = pm.getPackageInfo(getPackageName(), 0);
             if (pi.versionName == null || pi.versionName.length() <= 0) {
@@ -87,33 +81,33 @@ public class MyApplication extends Application {
 
     /**
      * 获取设备号
+     *
      * @return
      */
-//    public String getIMEI() {
-//        TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-//        String imei = "";
-//        try {
-//            imei = telephonyManager.getDeviceId().toLowerCase();
-//            if (imei.equals("000000000000000")) {
-//                imei = "emu" + (long) (Math.random() * 1000000000000L);
-//            }
-//            imei += "_iwindreporter";
-//            MULog.i("deviceid", "deviceId=" + imei);
-//            ActionCommon.writePreference(this, ConstantPref.EMULATOR_DEVICE_ID, imei);
-//        } catch (Exception e) {
-//
-//            String tmp = ActionCommon.readPreference(this, ConstantPref.EMULATOR_DEVICE_ID, "");
-//            if (tmp.equals("")) {
-//                imei = (new StringBuilder("emu")).append((new Random(System.currentTimeMillis())).nextLong()).toString();
-//                MULog.i("deviceid", "Exception not contains deviceId=" + imei);
-//                ActionCommon.writePreference(this, ConstantPref.EMULATOR_DEVICE_ID, imei);
-//            } else {
-//                imei = tmp;
-//            }
-//        }
-//
-//        return imei;
-//    }
+    public String getIMEI() {
+        TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        String imei = "";
+        try {
+            LogUtils.i(imei+"");
+            imei = telephonyManager.getDeviceId().toLowerCase();
+            if (imei.equals("000000000000000")) {
+                imei = "device_number" + (long) (Math.random() * 1000000000000L);
+            }
+            imei += "_yaobaohua";
+            SPUtils.put(this, Constants.EMULATOR_DEVICE_ID, imei);
+        } catch (Exception e) {
+            String tmp = (String) SPUtils.get(this, Constants.EMULATOR_DEVICE_ID, "");
+            if (tmp.equals("")) {
+                imei = (new StringBuilder("device_number")).append((new Random(System.currentTimeMillis())).nextLong()).toString();
+                SPUtils.put(this, Constants.EMULATOR_DEVICE_ID, imei);
+            } else {
+                imei = tmp;
+                LogUtils.d(imei+"");
+            }
+        }
+
+        return imei;
+    }
 
     public void exit() {
         activityManager.popAllActivity();

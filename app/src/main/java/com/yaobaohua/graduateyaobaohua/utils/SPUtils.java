@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
-import com.yaobaohua.graduateyaobaohua.common.ConstantPref;
+import com.yaobaohua.graduateyaobaohua.common.Constants;
 import com.yaobaohua.graduateyaobaohua.utils.encryption.Crypt;
 
 import java.lang.reflect.InvocationTargetException;
@@ -53,7 +53,7 @@ public class SPUtils {
         if (object instanceof String) {
 
             // 如果是密码，进行加密
-            if (key.equals(ConstantPref.USERPWD)) {
+            if (key.equals(Constants.USERPWD)) {
                 try {
                     object = Crypt.encrypt("key", (String) object);
                 } catch (Exception e) {
@@ -123,7 +123,7 @@ public class SPUtils {
 
             String refreshTime = sp.getString(key, (String) defaultObject);
             // 如果是密码，进行解密
-            if (key.equals(ConstantPref.USERPWD)) {
+            if (key.equals(Constants.USERPWD)) {
                 try {
                     refreshTime = Crypt.decrypt("key", refreshTime);
                 } catch (Exception e) {

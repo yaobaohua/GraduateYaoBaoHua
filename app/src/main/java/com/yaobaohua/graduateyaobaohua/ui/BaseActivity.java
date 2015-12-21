@@ -173,13 +173,6 @@ public class BaseActivity extends AppCompatActivity implements IBase, Toolbar.On
         MyApplication.getInstance().getActivityManager().pushActivity(this);//堆如activitymanager管理栈中
         if (!isInternetConnected())
             showToast(getResources().getString(R.string.toast_isinternet));
-//
-//        try {
-//            if (getSupportActionBar() != null)
-//                getSupportActionBar().hide();
-//        } catch (Exception e) {
-//            // MULog.printException(e);
-//        }
     }
 
 
