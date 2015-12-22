@@ -6,4 +6,7 @@
     <color name="gray">#808080</color><!--灰色 -->
     <color name="gray1">#cccccc</color><!--灰色 -->
     <color name="title_color">#333333</color>
+    <color name="black">#000000</color><!--黑色 -->
+    <color name="orange">#ff8000</color><!--绿色 -->
+    <color name="white">#ffffff</color><!--绿色 -->
 </resources>

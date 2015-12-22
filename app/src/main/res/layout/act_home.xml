@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sky="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    sky:divider="@drawable/action_line_h"
+    sky:showDividers="middle">
+    <include layout="@layout/activity_title"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/id_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal"
+        sky:divider="@drawable/action_line_v"
+        sky:showDividers="middle">
+
+        <com.yaobaohua.graduateyaobaohua.ui.widget.TabTextView
+            android:id="@+id/id_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/padding_4"
+            sky:tab_color="@color/orange"
+            sky:tab_icon="@mipmap/tab_home_normal"
+            sky:tab_text="主页"
+            sky:tab_textsize="@dimen/small"
+            />
+
+        <com.yaobaohua.graduateyaobaohua.ui.widget.TabTextView
+            android:id="@+id/id_two"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/padding_4"
+            sky:tab_color="@color/orange"
+            sky:tab_icon="@mipmap/tab_live_normal"
+            sky:tab_text="直播"
+            sky:tab_textsize="@dimen/small"/>
+
+        <com.yaobaohua.graduateyaobaohua.ui.widget.TabTextView
+            android:id="@+id/id_three"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/padding_4"
+            sky:tab_color="@color/orange"
+            sky:tab_icon="@mipmap/tab_usercenter_normal"
+            sky:tab_text="我的"
+            sky:tab_textsize="@dimen/small"/>
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</android.support.v7.widget.LinearLayoutCompat>

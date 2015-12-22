@@ -1,35 +1,33 @@
-package com.yaobaohua.graduateyaobaohua.ui.activity;
+package com.yaobaohua.graduateyaobaohua.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yaobaohua.graduateyaobaohua.R;
-import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
-import com.yaobaohua.graduateyaobaohua.ui.MyApplication;
 import com.yaobaohua.graduateyaobaohua.ui.adapter.MyShufflingFigureAdapter;
-import com.yaobaohua.graduateyaobaohua.utils.LogUtils;
+import com.yaobaohua.graduateyaobaohua.ui.BaseFragment;
+
+import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
-
-    @ViewInject(R.id.tv_title)
-    private TextView tvTitle;
-
+public class MainFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
     private DotImageHandler handler = new DotImageHandler(
-            new WeakReference<MainActivity>(this));
+            new WeakReference<MainFragment>(this));
 
     @ViewInject(R.id.home_viewPager)
     private ViewPager home_viewPager;
@@ -48,22 +46,18 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private RelativeLayout copy_of_home_rel;
 
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ViewUtils.inject(this);
-        setToolbar();
-        tvTitle.setText("首页");
-        LogUtils.e(MyApplication.getInstance().getIMEI());
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.frag_main,null);
+        x.view().inject(this,view);
         initLunBoData();
-
-
+        return view;
     }
-
 
     public void initLunBoData() {
         //第一步,初始化存放图片地址的ArrayList<String>
+        adPicture.clear();
         adPicture
                 .add("http://img.mukewang.com/55237dcc0001128c06000338.jpg");
         adPicture
@@ -81,7 +75,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         count = adPicture.size();
         //3.给ViewPager设置适配器
         home_viewPager
-                .setAdapter(new MyShufflingFigureAdapter(this, adPicture));
+                .setAdapter(new MyShufflingFigureAdapter(getActivity(), adPicture));
         home_viewPager.setOnPageChangeListener(this);
         initPageResoure();
     }
@@ -94,7 +88,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     }
 
     public void addDotImage() {
-        Context context = this;
+        Context context = getActivity();
         home_lin = new LinearLayout(context);
         ImageView dotIV = null;
         LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(
@@ -156,18 +150,18 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         protected static final long MSG_DELAY = 3000;
 
         // 使用弱引用避免Handler泄露.这里的泛型参数可以不是Activity，也可以是Fragment等
-        private WeakReference<MainActivity> weakReference;
+        private WeakReference<MainFragment> weakReference;
 
         private int currentItem = 0;
 
-        protected DotImageHandler(WeakReference<MainActivity> wk) {
+        protected DotImageHandler(WeakReference<MainFragment> wk) {
             weakReference = wk;
         }
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            MainActivity home = weakReference.get();
+            MainFragment home = weakReference.get();
             if (home == null) {
                 // Activity已经回收，无需再处理UI了
                 return;

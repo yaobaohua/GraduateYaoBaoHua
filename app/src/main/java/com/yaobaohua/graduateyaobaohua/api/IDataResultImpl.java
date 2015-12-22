@@ -1,13 +1,11 @@
 package com.yaobaohua.graduateyaobaohua.api;
 
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.util.LogUtils;
 
-/**
- * @author sky QQ:1136096189
- * @Description: idataresult的实现类
- * @date 15/11/20 下午1:59
- */
+import com.yaobaohua.graduateyaobaohua.utils.LogUtils;
+
+import org.xutils.ex.HttpException;
+
+
 public abstract class IDataResultImpl<T> implements IDataResult<T>{
     @Override
     public void onFailure(HttpException arg0, int arg1) {

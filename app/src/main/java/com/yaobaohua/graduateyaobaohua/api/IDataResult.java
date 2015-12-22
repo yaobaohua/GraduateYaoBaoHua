@@ -1,12 +1,9 @@
 package com.yaobaohua.graduateyaobaohua.api;
 
-import com.lidroid.xutils.exception.HttpException;
 
-/**
- * @author sky QQ:1136096189
- * @Description:
- * @date 15/11/20 下午1:59
- */
+import org.xutils.ex.HttpException;
+
+
 public interface IDataResult<T> {
     void onFailure(HttpException arg0, int arg1);
 

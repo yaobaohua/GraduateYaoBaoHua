@@ -4,18 +4,16 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Environment;
 import android.telephony.TelephonyManager;
-import android.widget.Toast;
 
-import com.lidroid.xutils.BitmapUtils;
-import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.common.Constants;
 import com.yaobaohua.graduateyaobaohua.utils.ActivityManager;
 import com.yaobaohua.graduateyaobaohua.utils.LogUtils;
 import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
 
-import java.io.File;
+import org.xutils.BuildConfig;
+import org.xutils.x;
+
 import java.util.Random;
 
 /**
@@ -30,7 +28,6 @@ public class MyApplication extends Application {
     }
 
     private static MyApplication instance;
-    public BitmapUtils bitmapUtils;
 
     public static MyApplication getInstance() {
         return instance;
@@ -41,10 +38,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        bitmapUtils = new BitmapUtils(this);
-        bitmapUtils.configDefaultLoadingImage(R.mipmap.plugin_camera_no_pictures);
-        bitmapUtils.configDefaultLoadFailedImage(R.mipmap.plugin_camera_no_pictures);
-
+        x.Ext.init(this);
+        x.Ext.setDebug(BuildConfig.DEBUG);
         // 初始化自定义Activity管理器
         activityManager = ActivityManager.getActivityManager();
     }

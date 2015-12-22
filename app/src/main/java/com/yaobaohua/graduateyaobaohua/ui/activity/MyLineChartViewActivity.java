@@ -2,12 +2,13 @@ package com.yaobaohua.graduateyaobaohua.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.ViewUtils;
 import android.widget.TextView;
-
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
+
+import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 /**
  * Created by yaobaohua on 2015/12/21 0021.
@@ -22,7 +23,7 @@ public class MyLineChartViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_linechartview);
-        ViewUtils.inject(this);
+        x.view().inject(this);
         setToolbar();
         tvTitle.setText("线形图");
 

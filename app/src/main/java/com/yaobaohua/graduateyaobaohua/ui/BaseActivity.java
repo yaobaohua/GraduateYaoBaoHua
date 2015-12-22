@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
 import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.api.IBase;
 import com.yaobaohua.graduateyaobaohua.common.Constants;
@@ -19,20 +18,25 @@ import com.yaobaohua.graduateyaobaohua.utils.NetworkJudgment;
 import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
 import com.yaobaohua.graduateyaobaohua.utils.ToastUtils;
 
-/**
- * @author LiBin
- * @ClassName: BaseActivity
- * @Description: TODO 基类activity
- * @date 2015年3月26日 下午4:01:00
- */
+import org.xutils.x;
 
-/**
- * 增加修改
- * author ShenZhenWei
- * time   15/11/24.
- * email  826337999@qq.com
- */
 public class BaseActivity extends AppCompatActivity implements IBase, Toolbar.OnMenuItemClickListener {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        x.view().inject(this);
+        MyApplication.getInstance().getActivityManager().pushActivity(this);//堆如activitymanager管理栈中
+        if (!isInternetConnected())
+            showToast(getResources().getString(R.string.toast_isinternet));
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyApplication.getInstance().getActivityManager().popActivity(this);//销毁时从管理栈中移除
+    }
 
     public void showToast(String text) {
         ToastUtils.showShort(this, text);
@@ -41,8 +45,8 @@ public class BaseActivity extends AppCompatActivity implements IBase, Toolbar.On
     private Toolbar toolbar;
     private TextView tvTitle;
     private ImageView imgTopic;
+
     private TextView tvLeftTitle;
-    public BitmapUtils bitmapUtils = MyApplication.getInstance().bitmapUtils;
 
     /**
      * 配合XML文件，设置toolbar
@@ -168,21 +172,6 @@ public class BaseActivity extends AppCompatActivity implements IBase, Toolbar.On
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        MyApplication.getInstance().getActivityManager().pushActivity(this);//堆如activitymanager管理栈中
-        if (!isInternetConnected())
-            showToast(getResources().getString(R.string.toast_isinternet));
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        MyApplication.getInstance().getActivityManager().popActivity(this);//销毁时从管理栈中移除
-    }
-
-    @Override
     public String getUserName() {
 
         return (String) SPUtils.get(this, Constants.USERNAME, "");
@@ -252,6 +241,5 @@ public class BaseActivity extends AppCompatActivity implements IBase, Toolbar.On
     @Override
     public void finish() {
         super.finish();
-//        overridePendingTransition(R.anim.act_stop, R.anim.in_from_right);
     }
 }

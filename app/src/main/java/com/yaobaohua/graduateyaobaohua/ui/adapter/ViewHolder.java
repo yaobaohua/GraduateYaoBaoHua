@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lidroid.xutils.BitmapUtils;
-import com.yaobaohua.graduateyaobaohua.ui.MyApplication;
+import com.yaobaohua.graduateyaobaohua.R;
+
+import org.xutils.common.util.DensityUtil;
+import org.xutils.image.ImageOptions;
+import org.xutils.x;
 
 
 public class ViewHolder {
@@ -111,13 +114,24 @@ public class ViewHolder {
      * @param viewId
      * @return
      */
-    public ViewHolder setImageByUrl(Context context, int viewId, String url)
+    public ViewHolder setImageByUrl(int viewId, String url)
 
     {
-        BitmapUtils bitmap = MyApplication.getInstance().bitmapUtils;
+        ImageOptions imageOptions;
+        imageOptions = new ImageOptions.Builder()
 
-        bitmap.display((ImageView) getView(viewId), url);
+                //.setSize(DensityUtil.dip2px(120), DensityUtil.dip2px(120))
+                .setRadius(DensityUtil.dip2px(5))
+                // 如果ImageView的大小不是定义为wrap_content, 不要crop.
+                .setCrop(true)
+                // 加载中或错误图片的ScaleType
+                //.setPlaceholderScaleType(ImageView.ScaleType.MATRIX)
+                .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+                .setLoadingDrawableId(R.mipmap.ic_launcher)
+                .setFailureDrawableId(R.mipmap.ic_launcher)
+                .build();
 
+        x.image().bind((ImageView) getView(viewId), url, imageOptions);
         return this;
     }
 
