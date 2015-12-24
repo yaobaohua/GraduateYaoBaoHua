@@ -1,6 +1,6 @@
 package com.yaobaohua.graduateyaobaohua.utils.encryption;
 
-import com.yaobaohua.graduateyaobaohua.utils.LogUtils;
+import org.xutils.common.util.LogUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -110,7 +110,7 @@ public class Crypt {
         File file = new File("C:/12345.txt");
         String md5 = getFileMD5String(file);
         long end = System.currentTimeMillis();
-        LogUtils.i("log", "md5:" + md5 + " time:" + (end - begin) / 1000L + "s");
+        LogUtil.i( "md5:" + md5 + " time:" + (end - begin) / 1000L + "s");
     }
 }
 

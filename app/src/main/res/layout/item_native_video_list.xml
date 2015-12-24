@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/img_preview_native"
+        android:layout_width="100dp"
+        android:layout_margin="10dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/icon_native" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_native_name"
+            style="@style/TextLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="aaaaaaaaaaaa" />
+
+        <TextView
+            android:id="@+id/tv_native_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/gray"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="22m" />
+
+        <TextView
+            android:id="@+id/tv_native_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/gray"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="22m" />
+
+    </RelativeLayout>
+
+</LinearLayout>

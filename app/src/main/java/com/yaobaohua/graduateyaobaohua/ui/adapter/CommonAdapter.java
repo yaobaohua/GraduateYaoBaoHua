@@ -60,4 +60,5 @@ public abstract class CommonAdapter<T> extends BaseAdapter
 				position);
 	}
 
+
 }

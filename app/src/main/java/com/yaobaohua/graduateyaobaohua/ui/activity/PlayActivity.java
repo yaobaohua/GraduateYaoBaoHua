@@ -35,6 +35,7 @@ import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
 import com.yaobaohua.graduateyaobaohua.utils.ScreenUtils;
 import com.yaobaohua.graduateyaobaohua.utils.ToastUtils;
 
+import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -133,7 +134,6 @@ public class PlayActivity extends Activity implements OnClickListener,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.act_play);
         x.view().inject(this);
-
         initView();
         getInitDate();
         setPlayNameDate();

@@ -1,5 +1,7 @@
 package com.yaobaohua.graduateyaobaohua.ui.dialog;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -43,7 +45,7 @@ public class DialogManager {
         loadingDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                loadingDialog=null;
+                loadingDialog = null;
             }
         });
         return loadingDialog;
@@ -60,5 +62,51 @@ public class DialogManager {
             return;
         loadingDialog.dismiss();
     }
+
+    public interface EnterOrBackDialogListener {
+
+        void onWarningDialogOK(int id);
+
+        void onWarningDialogCancel(int id);
+    }
+
+    /**
+     * @param context      上下文参数
+     * @param id           dialog的id
+     * @param warning      警告的内容
+     * @param title        标题
+     * @param positiveText
+     * @param negativeText 标题
+     * @param listener     重写方法
+     * @return
+     */
+    public static Dialog createYesNoWarningDialog(final Context context,
+                                                  final int id, String warning, String title, String positiveText, String negativeText,
+                                                  final EnterOrBackDialogListener listener) {
+
+        return new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(warning)
+                .setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        if (context instanceof Activity) {
+                            ((Activity) context).removeDialog(id);
+                        }
+                        if (listener != null)
+                            listener.onWarningDialogOK(id);
+                    }
+                })
+                .setNegativeButton(negativeText, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        if (context instanceof Activity) {
+                            ((Activity) context).removeDialog(id);
+
+                            if (listener != null)
+                                listener.onWarningDialogCancel(id);
+                        }
+                    }
+                }).create();
+    }
+
 
 }

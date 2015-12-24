@@ -26,6 +26,9 @@
             android:name=".ui.activity.PlayActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"></activity>
+        
+        <activity android:name=".ui.activity.NativeVideoActivity"/>
+        <activity android:name=".ui.activity.MyDownLoadVideoActivity"/>
     </application>
 
 </manifest>

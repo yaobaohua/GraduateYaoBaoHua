@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
 
+import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -15,6 +16,7 @@ import org.xutils.x;
  * Email 2584899504@qq.com
  * Desc
  */
+@ContentView(R.layout.activity_my_linechartview)
 public class MyLineChartViewActivity extends BaseActivity {
     @ViewInject(R.id.tv_title)
     private TextView tvTitle;
@@ -22,8 +24,6 @@ public class MyLineChartViewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_linechartview);
-        x.view().inject(this);
         setToolbar();
         tvTitle.setText("线形图");
 

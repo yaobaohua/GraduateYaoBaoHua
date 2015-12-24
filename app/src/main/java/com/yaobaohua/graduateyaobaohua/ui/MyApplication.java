@@ -8,10 +8,10 @@ import android.telephony.TelephonyManager;
 
 import com.yaobaohua.graduateyaobaohua.common.Constants;
 import com.yaobaohua.graduateyaobaohua.utils.ActivityManager;
-import com.yaobaohua.graduateyaobaohua.utils.LogUtils;
 import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
 
 import org.xutils.BuildConfig;
+import org.xutils.DbManager;
 import org.xutils.x;
 
 import java.util.Random;
@@ -33,6 +33,20 @@ public class MyApplication extends Application {
         return instance;
     }
 
+    public static DbManager.DaoConfig daoConfig = new DbManager.DaoConfig()
+            .setDbName("yaobd")
+            .setDbVersion(1)
+            .setDbUpgradeListener(new DbManager.DbUpgradeListener() {
+                @Override
+                public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
+                }
+            });
+
+    public static DbManager db;
+
+    public  static DbManager getDbManager() {
+        return db;
+    }
 
     @Override
     public void onCreate() {
@@ -40,6 +54,8 @@ public class MyApplication extends Application {
         instance = this;
         x.Ext.init(this);
         x.Ext.setDebug(BuildConfig.DEBUG);
+        db = x.getDb(MyApplication.daoConfig);
+
         // 初始化自定义Activity管理器
         activityManager = ActivityManager.getActivityManager();
     }
@@ -83,7 +99,6 @@ public class MyApplication extends Application {
         TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         String imei = "";
         try {
-            LogUtils.i(imei+"");
             imei = telephonyManager.getDeviceId().toLowerCase();
             if (imei.equals("000000000000000")) {
                 imei = "device_number" + (long) (Math.random() * 1000000000000L);
@@ -97,7 +112,6 @@ public class MyApplication extends Application {
                 SPUtils.put(this, Constants.EMULATOR_DEVICE_ID, imei);
             } else {
                 imei = tmp;
-                LogUtils.d(imei+"");
             }
         }
 

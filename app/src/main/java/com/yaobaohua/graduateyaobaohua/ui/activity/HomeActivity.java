@@ -47,7 +47,6 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        x.view().inject(this);
         setToolbar();
         setLeftButton(-1);
         tabTextViews = new ArrayList<>();
@@ -121,7 +120,6 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-    //@OnClick({R.id.id_main, R.id.id_two, R.id.id_three})
     @Event(value = {R.id.id_main, R.id.id_two, R.id.id_three}, type = View.OnClickListener.class)
     private void onClick(View v) {
 
