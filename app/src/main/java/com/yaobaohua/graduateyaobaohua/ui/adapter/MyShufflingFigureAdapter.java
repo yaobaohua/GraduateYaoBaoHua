@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.Toast;
 
+import com.yaobaohua.graduateyaobaohua.model.Video;
 import com.yaobaohua.graduateyaobaohua.ui.MyApplication;
+import com.yaobaohua.graduateyaobaohua.ui.activity.MyPlayActivity;
 import com.yaobaohua.graduateyaobaohua.ui.activity.PlayActivity;
 import com.yaobaohua.graduateyaobaohua.utils.ToastUtils;
 import com.yaobaohua.graduateyaobaohua.utils.UtilJump;
@@ -41,7 +43,7 @@ public class MyShufflingFigureAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(final ViewGroup container,  int position) {
+    public Object instantiateItem(final ViewGroup container, int position) {
         // 对ViewPager页号求模取出View列表中要显示的项
         position %= urls.size();
         if (position < 0) {
@@ -50,7 +52,7 @@ public class MyShufflingFigureAdapter extends PagerAdapter {
         final int temp = position;
         ImageView imageView = new ImageView(context);
         // 获取网上轮播图片设置到ImageView中
-        x.image().bind(imageView,urls.get(position));
+        x.image().bind(imageView, urls.get(position));
 
         imageView.setScaleType(ScaleType.FIT_XY);
         container.addView(imageView);
@@ -60,15 +62,13 @@ public class MyShufflingFigureAdapter extends PagerAdapter {
             public void onClick(View v) {
 
 
-                Intent intent=new Intent(context,PlayActivity.class);
-                String path= Environment.getExternalStorageDirectory().getPath()+"/sss.mp4";
-            //  String path="http://125.39.7.18:1863/200075500.flv?cdncode=%2f18907E7BE0798990%2f&time=1450760022&cdn=zijian&sdtfrom=v50221&platform=70202&scheduleflag=1&buname=qqlive&vkey=5D20C4F5FC36F4E6E856AFF993170CAEC5B7AB4D37FC556D20D36A587A8DEFFCBA4EE361F179DB9309191272625111D2AF4E7A46D4366EC5BF2B8937252E2B3B8D4D89426941726F50C2A1F2A4E30707&guid=B5B3AE746A57DD6020E240B4D37877C65872413B&refer=http%3A%2F%2Fwww.longzhu.com%2F&apptype=live";
-                intent.putExtra("vName","极客学院");
-                intent.putExtra("vUrl",path);
-                intent.putExtra("vId","22");
-                intent.putExtra("vType","1");
+                //String path = Environment.getExternalStorageDirectory().getPath() + "/sss.mp4";
+                Intent intent = new Intent(context, MyPlayActivity.class);
+                String path = "http://125.39.7.24/vmind.qqvideo.tc.qq.com/e0200ferfbm.p202.1.mp4?vkey=5EF6E2016F9C06942DC8C639BA12F6158422A5EDC8682AAEA3109F3550A2C4A416CC98F393CAA81F0DD167E7192F6212B665D0CA3C84AB5025C9A87744702DED49616AED09F4AE4520B0050AA5906A21668332CDBCAB4741&platform=&sdtfrom=&fmt=hd&level=0";
+
+                intent.putExtra("video", new Video("西游记归来", "33", path, "333", "3"));
+
                 context.startActivity(intent);
-                ToastUtils.show(context,temp+"", Toast.LENGTH_LONG);
             }
         });
 

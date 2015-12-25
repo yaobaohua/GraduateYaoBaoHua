@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.common.Constants;
 import com.yaobaohua.graduateyaobaohua.model.NativeVideoModel;
+import com.yaobaohua.graduateyaobaohua.model.Video;
 import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
 import com.yaobaohua.graduateyaobaohua.ui.MyApplication;
 import com.yaobaohua.graduateyaobaohua.ui.adapter.CommonAdapter;
@@ -81,11 +82,9 @@ public class NativeVideoActivity extends BaseActivity {
         lvNative.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(NativeVideoActivity.this, PlayActivity.class);
-                intent.putExtra("vName", models.get(position).getVideoName());
+                Intent intent = new Intent(NativeVideoActivity.this, MyPlayActivity.class);
                 if (!models.get(position).getVideoPath().isEmpty() && new File(models.get(position).getVideoPath()).exists()) {
-                    intent.putExtra("vUrl", models.get(position).getVideoPath());
-                    intent.putExtra("vType", "2");
+                    intent.putExtra("video",new Video("models.get(position).getVideoName()","33",models.get(position).getVideoPath(),"333","2"));
                     startActivity(intent);
                 } else {
                     try {
@@ -210,10 +209,9 @@ public class NativeVideoActivity extends BaseActivity {
                         activity.lvNative.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Intent intent = new Intent(mActivity.get(), PlayActivity.class);
-                                intent.putExtra("vName", listData.get(position).getVideoName());
-                                intent.putExtra("vUrl", listData.get(position).getVideoPath());
-                                intent.putExtra("vType", "2");
+                                Intent intent = new Intent(mActivity.get(), MyPlayActivity.class);
+                                intent.putExtra("video",new Video(listData.get(position).getVideoName(),"33",listData.get(position).getVideoPath(),"333","2"));
+                                intent.putExtra("isNative",true);
                                 activity.startActivity(intent);
                             }
                         });

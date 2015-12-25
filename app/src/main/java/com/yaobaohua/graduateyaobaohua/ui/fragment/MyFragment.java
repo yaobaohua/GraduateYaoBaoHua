@@ -6,9 +6,12 @@ import android.widget.ImageView;
 
 import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.ui.BaseFragment;
+import com.yaobaohua.graduateyaobaohua.ui.activity.MyDownLoadVideoActivity;
 import com.yaobaohua.graduateyaobaohua.ui.activity.NativeVideoActivity;
+import com.yaobaohua.graduateyaobaohua.ui.download.DownloadService;
 import com.yaobaohua.graduateyaobaohua.utils.UtilJump;
 
+import org.xutils.ex.DbException;
 import org.xutils.image.ImageOptions;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -54,12 +57,13 @@ public class MyFragment extends BaseFragment {
                 .build();
     }
 
-    @Event(value = {R.id.rl_native_my, R.id.rl_history_my, R.id.img_download_my})
+    @Event(value = {R.id.rl_native_my, R.id.rl_history_my, R.id.rl_download_my})
     private void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_history_my:
                 break;
             case R.id.rl_download_my:
+                UtilJump.jump2Act(getActivity(), MyDownLoadVideoActivity.class);
                 break;
             case R.id.rl_native_my:
                 UtilJump.jump2Act(getActivity(), NativeVideoActivity.class);

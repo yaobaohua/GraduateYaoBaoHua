@@ -1,6 +1,9 @@
 package com.yaobaohua.graduateyaobaohua.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +13,9 @@ import android.widget.TextView;
 
 import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.model.NativeVideoModel;
+import com.yaobaohua.graduateyaobaohua.utils.FileSizeFormatUtils;
 
+import org.xutils.image.ImageOptions;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -25,10 +30,12 @@ public class MyNativeVideoAdapter extends BaseAdapter {
 
     private Context context;
     private List<NativeVideoModel> mDatas;
+    ImageOptions options;
 
     public MyNativeVideoAdapter(Context context, List<NativeVideoModel> mDatas) {
         this.context = context;
         this.mDatas = mDatas;
+        options = new ImageOptions.Builder().setUseMemCache(true).build();
 
     }
 

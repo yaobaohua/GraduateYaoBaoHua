@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">GraduateYaoBaoHua</string>
     <string name="toast_exit">再按一次返回键回到桌面</string>
+    <string name="toast_exit_play">再按一次退出播放</string>
     <string name="toast_isinternet">您的网络未连接</string>
     <string name="tab_main">首页</string>
     <string name="tab_my">个人</string>

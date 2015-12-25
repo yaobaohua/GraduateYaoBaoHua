@@ -3,8 +3,8 @@
     package="com.yaobaohua.graduateyaobaohua">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ui.MyApplication"
@@ -26,9 +26,14 @@
             android:name=".ui.activity.PlayActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"></activity>
-        
-        <activity android:name=".ui.activity.NativeVideoActivity"/>
-        <activity android:name=".ui.activity.MyDownLoadVideoActivity"/>
+        <activity
+            android:name=".ui.activity.MyPlayActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="landscape"></activity>
+
+        <activity android:name=".ui.activity.NativeVideoActivity" />
+        <activity android:name=".ui.activity.MyDownLoadVideoActivity" />
+        <activity android:name=".ui.activity.PlayHistoryActivity"></activity>
     </application>
 
 </manifest>

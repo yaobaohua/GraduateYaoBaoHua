@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -31,10 +32,13 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.yaobaohua.graduateyaobaohua.R;
+import com.yaobaohua.graduateyaobaohua.model.NativeVideoModel;
 import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
+import com.yaobaohua.graduateyaobaohua.ui.MyApplication;
 import com.yaobaohua.graduateyaobaohua.utils.ScreenUtils;
 import com.yaobaohua.graduateyaobaohua.utils.ToastUtils;
 
+import org.xutils.ex.DbException;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -333,7 +337,6 @@ public class PlayActivity extends Activity implements OnClickListener,
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-
             }
         });
 
@@ -377,7 +380,7 @@ public class PlayActivity extends Activity implements OnClickListener,
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 mVolumeBrightnessLayout.setVisibility(View.GONE);
-            } else {
+            } else if (msg.what == 1) {
                 fLayout.setVisibility(View.GONE);
                 layout.setVisibility(View.GONE);
                 imageView.setVisibility(View.GONE);
@@ -561,5 +564,6 @@ public class PlayActivity extends Activity implements OnClickListener,
         System.gc();
 
     }
+
 
 }

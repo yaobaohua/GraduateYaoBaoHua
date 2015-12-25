@@ -2,6 +2,7 @@ package com.yaobaohua.graduateyaobaohua.utils;
 
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 
 import java.text.DecimalFormat;
 
@@ -37,24 +38,14 @@ public class FileSizeFormatUtils {
         return fileSizeString;
     }
 
-    public static Bitmap getVideoThumbnail(String filePath) {
+    public  static Bitmap getVideoThumbnail(String videoPath, int width, int height,
+                                     int kind) {
         Bitmap bitmap = null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        try {
-            retriever.setDataSource(filePath);
-            bitmap = retriever.getFrameAtTime();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                retriever.release();
-            } catch (RuntimeException e) {
-                e.printStackTrace();
-            }
-        }
+        // 获取视频的缩略图
+        bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, kind);
+        bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
+                ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
         return bitmap;
-    }
 
+    }
 }
