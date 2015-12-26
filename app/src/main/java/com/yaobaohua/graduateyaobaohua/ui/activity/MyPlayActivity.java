@@ -1,9 +1,7 @@
 package com.yaobaohua.graduateyaobaohua.ui.activity;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Path;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +21,7 @@ import android.widget.TextView;
 
 import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.common.Constants;
+import com.yaobaohua.graduateyaobaohua.db.VideoDBManager;
 import com.yaobaohua.graduateyaobaohua.model.Video;
 import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
 import com.yaobaohua.graduateyaobaohua.ui.download.DownloadService;
@@ -32,14 +30,10 @@ import org.xutils.ex.DbException;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
-import java.net.HttpURLConnection;
-import java.sql.Timestamp;
-
-import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnSeekCompleteListener;
+import io.vov.vitamio.Vitamio;
 import io.vov.vitamio.utils.StringUtils;
 import io.vov.vitamio.widget.VideoView;
 
@@ -152,10 +146,7 @@ public class MyPlayActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置vitamio注册
-        if (!LibsChecker.checkVitamioLibs(this))
-            return;
-        //设置全屏
+        Vitamio.isInitialized(getApplicationContext());
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //初始化声音亮度
@@ -205,6 +196,10 @@ public class MyPlayActivity extends BaseActivity implements
 
         try {
             videoView.setVideoPath(vPath);
+            if (video.getVideo_progress().equals("0")) {
+                videoView.seekTo(Long.valueOf(video.getVideo_progress()));
+            }
+            ;
             isPlaying = true;
             videoView.setOnCompletionListener(this);
             videoView.setOnBufferingUpdateListener(this);
@@ -326,6 +321,8 @@ public class MyPlayActivity extends BaseActivity implements
     //在这里写保存当前进度的东西，并且存入播放记录
     private void finishPlay() {
         long currentPosition = videoView.getCurrentPosition();
+        video.setVideo_progress(currentPosition + "");
+        new VideoDBManager(this).insert(video);
         finish();
     }
 
@@ -390,10 +387,9 @@ public class MyPlayActivity extends BaseActivity implements
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-
         llProgress.setVisibility(View.GONE);
         if (vPath.startsWith("http")) {
-            videoView.setBufferSize(1024 * 1000);
+            videoView.setBufferSize(512 * 1024);
         } else {
             videoView.setBufferSize(0);
         }
@@ -489,7 +485,7 @@ public class MyPlayActivity extends BaseActivity implements
             if (!vType.equals("1")) {
                 mSeekBar.setProgress((int) (size * sMax / mMax));
             }
-            if (vType.equals("1")||vType.equals("2")) {
+            if (vType.equals("1") || vType.equals("2")) {
                 imgDownLoad.setVisibility(View.INVISIBLE);
             }
         }

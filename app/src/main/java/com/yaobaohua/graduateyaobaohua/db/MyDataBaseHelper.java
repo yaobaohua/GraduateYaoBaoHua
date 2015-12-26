@@ -27,8 +27,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
             + VideoInfo.Video.VIDEO_NAME + " text unique,"
             + VideoInfo.Video.VIDEO_PATH
             + " text unique," + VideoInfo.Video.VIDEO_PROGRESS + " text,"
-            + VideoInfo.Video.VIDEO_SIZE + " text,"
-            + VideoInfo.Video.VIDEO_TYPE + " text)";
+            + VideoInfo.Video.VIDEO_SIZE + " text," + VideoInfo.Video.VIDEO_TYPE + " text,"
+            + VideoInfo.Video.VIDEO_NATIVE + " text)";
 
 
     @Override

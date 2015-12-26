@@ -247,7 +247,7 @@ public class MyDownLoadVideoActivity extends BaseActivity {
 
                             Intent intent = new Intent(getApplicationContext(), MyPlayActivity.class);
 
-                            intent.putExtra("video", new Video(downloadInfo.getLabel(), "33", downloadInfo.getFileSavePath(), "333", "2"));
+                            intent.putExtra("video", new Video(downloadInfo.getLabel(), "33", downloadInfo.getFileSavePath(), "333", "2","1"));
 
                             startActivity(intent);
                         }

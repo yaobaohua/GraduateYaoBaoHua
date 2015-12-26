@@ -40,6 +40,7 @@ public class VideoDBManager {
         values.put(VideoInfo.Video.VIDEO_PROGRESS, video.getVideo_progress());
         values.put(VideoInfo.Video.VIDEO_SIZE, video.getVideo_Size());
         values.put(VideoInfo.Video.VIDEO_TYPE, video.getVideo_type());
+        values.put(VideoInfo.Video.VIDEO_NATIVE, video.getVideo_Native());
         db.execSQL("PRAGMA foreign_keys=1");
         long temp = db.insert(table, null, values);
         if (temp == -1) {
@@ -81,6 +82,7 @@ public class VideoDBManager {
         values.put(VideoInfo.Video.VIDEO_PROGRESS, video.getVideo_progress());
         values.put(VideoInfo.Video.VIDEO_SIZE, video.getVideo_Size());
         values.put(VideoInfo.Video.VIDEO_TYPE, video.getVideo_type());
+        values.put(VideoInfo.Video.VIDEO_NATIVE, video.getVideo_Native());
 
         String whereClause = VideoInfo.Video.VIDEO_ID + "=?";
         String[] whereArgs = {String.valueOf(video.getVideo_id())};
@@ -124,6 +126,8 @@ public class VideoDBManager {
                     .getColumnIndexOrThrow(VideoInfo.Video.VIDEO_SIZE)));
             video.setVideo_type(cursor.getString(cursor
                     .getColumnIndexOrThrow(VideoInfo.Video.VIDEO_TYPE)));
+            video.setVideo_Native(cursor.getString(cursor
+                    .getColumnIndexOrThrow(VideoInfo.Video.VIDEO_NATIVE)));
         }
         // 释放资源
         cursor.close();
@@ -170,7 +174,8 @@ public class VideoDBManager {
                     .getColumnIndexOrThrow(VideoInfo.Video.VIDEO_SIZE)));
             video.setVideo_type(cursor.getString(cursor
                     .getColumnIndexOrThrow(VideoInfo.Video.VIDEO_TYPE)));
-
+            video.setVideo_Native(cursor.getString(cursor
+                    .getColumnIndexOrThrow(VideoInfo.Video.VIDEO_NATIVE)));
             listData.add(video);
         }
         // 释放资源
@@ -216,6 +221,8 @@ public class VideoDBManager {
                     .getColumnIndexOrThrow(VideoInfo.Video.VIDEO_SIZE)));
             video.setVideo_type(cursor.getString(cursor
                     .getColumnIndexOrThrow(VideoInfo.Video.VIDEO_TYPE)));
+            video.setVideo_Native(cursor.getString(cursor
+                    .getColumnIndexOrThrow(VideoInfo.Video.VIDEO_NATIVE)));
             list.add(video);
         }
         // 释放资源

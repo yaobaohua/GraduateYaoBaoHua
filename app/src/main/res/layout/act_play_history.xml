@@ -7,8 +7,8 @@
     <include layout="@layout/activity_title" />
 
     <ListView
-        android:id="@+id/lv_my_download_video_download"
+        android:id="@+id/lv_play_history"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
-
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"></ListView>
 </LinearLayout>

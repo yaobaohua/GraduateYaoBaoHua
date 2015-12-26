@@ -8,6 +8,7 @@ import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.ui.BaseFragment;
 import com.yaobaohua.graduateyaobaohua.ui.activity.MyDownLoadVideoActivity;
 import com.yaobaohua.graduateyaobaohua.ui.activity.NativeVideoActivity;
+import com.yaobaohua.graduateyaobaohua.ui.activity.PlayHistoryActivity;
 import com.yaobaohua.graduateyaobaohua.ui.download.DownloadService;
 import com.yaobaohua.graduateyaobaohua.utils.UtilJump;
 
@@ -61,6 +62,7 @@ public class MyFragment extends BaseFragment {
     private void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_history_my:
+                UtilJump.jump2Act(getActivity(), PlayHistoryActivity.class);
                 break;
             case R.id.rl_download_my:
                 UtilJump.jump2Act(getActivity(), MyDownLoadVideoActivity.class);

@@ -9,4 +9,5 @@
     <color name="black">#000000</color><!--黑色 -->
     <color name="orange">#ff8000</color><!--绿色 -->
     <color name="white">#ffffff</color><!--绿色 -->
+    <color name="transparent">#ffffffff</color><!--绿色 -->
 </resources>

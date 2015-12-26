@@ -84,7 +84,7 @@ public class NativeVideoActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(NativeVideoActivity.this, MyPlayActivity.class);
                 if (!models.get(position).getVideoPath().isEmpty() && new File(models.get(position).getVideoPath()).exists()) {
-                    intent.putExtra("video",new Video("models.get(position).getVideoName()","33",models.get(position).getVideoPath(),"333","2"));
+                    intent.putExtra("video", new Video("models.get(position).getVideoName()", "33", models.get(position).getVideoPath(), "0", "2", "1"));
                     startActivity(intent);
                 } else {
                     try {
@@ -210,8 +210,8 @@ public class NativeVideoActivity extends BaseActivity {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Intent intent = new Intent(mActivity.get(), MyPlayActivity.class);
-                                intent.putExtra("video",new Video(listData.get(position).getVideoName(),"33",listData.get(position).getVideoPath(),"333","2"));
-                                intent.putExtra("isNative",true);
+                                intent.putExtra("video", new Video(listData.get(position).getVideoName(), "33", listData.get(position).getVideoPath(), "0", "2", "1"));
+                                intent.putExtra("isNative", true);
                                 activity.startActivity(intent);
                             }
                         });

@@ -23,8 +23,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile project(':InitActivity')
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
-    compile 'org.xutils:xutils:3.1.20'
+    compile 'org.xutils:xutils:3.1.22'
+    compile project(':vitamio')
 }

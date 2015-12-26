@@ -56,21 +56,19 @@ public class MyShufflingFigureAdapter extends PagerAdapter {
 
         imageView.setScaleType(ScaleType.FIT_XY);
         container.addView(imageView);
-        imageView.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-                //String path = Environment.getExternalStorageDirectory().getPath() + "/sss.mp4";
-                Intent intent = new Intent(context, MyPlayActivity.class);
-                String path = "http://125.39.7.24/vmind.qqvideo.tc.qq.com/e0200ferfbm.p202.1.mp4?vkey=5EF6E2016F9C06942DC8C639BA12F6158422A5EDC8682AAEA3109F3550A2C4A416CC98F393CAA81F0DD167E7192F6212B665D0CA3C84AB5025C9A87744702DED49616AED09F4AE4520B0050AA5906A21668332CDBCAB4741&platform=&sdtfrom=&fmt=hd&level=0";
-
-                intent.putExtra("video", new Video("西游记归来", "33", path, "333", "3"));
-
-                context.startActivity(intent);
-            }
-        });
+        /**
+         * 这里写轮播图的点击事件
+         */
+//        imageView.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, MyPlayActivity.class);
+//                String path = "http://www.modrails.com/videos/passenger_nginx.mov";
+//                intent.putExtra("video", new Video("西游记", "33", path, "0", "3"));
+//                context.startActivity(intent);
+//            }
+//        });
 
 
         // 如果View已经在之前添加到了一个父组件，则必须先remove，否则会抛出IllegalStateException。

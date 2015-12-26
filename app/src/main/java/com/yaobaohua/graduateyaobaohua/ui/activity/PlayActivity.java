@@ -45,7 +45,6 @@ import org.xutils.x;
 
 import java.sql.Timestamp;
 
-import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
@@ -54,6 +53,7 @@ import io.vov.vitamio.MediaPlayer.OnInfoListener;
 import io.vov.vitamio.MediaPlayer.OnPreparedListener;
 import io.vov.vitamio.MediaPlayer.OnSeekCompleteListener;
 import io.vov.vitamio.MediaPlayer.OnVideoSizeChangedListener;
+import io.vov.vitamio.Vitamio;
 import io.vov.vitamio.utils.StringUtils;
 import io.vov.vitamio.widget.VideoView;
 
@@ -131,8 +131,7 @@ public class PlayActivity extends Activity implements OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!LibsChecker.checkVitamioLibs(this))
-            return;
+        Vitamio.isInitialized(getApplicationContext());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
