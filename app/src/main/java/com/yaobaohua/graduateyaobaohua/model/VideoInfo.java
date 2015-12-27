@@ -19,9 +19,8 @@ public class VideoInfo {
         public static final String VIDEO_PATH = "video_Path";
         public static final String VIDEO_PROGRESS = "video_Progress";
         public static final String VIDEO_TYPE = "video_Type";
-        public static final String VIDEO_NATIVE = "video_Native ";
-
-
+        public static final String VIDEO_DOWNFLAG = "video_DownFlag";
+        public static final String VIDEO_PLAYED = "video_Played";
 
     }
 }

@@ -3,24 +3,11 @@ package com.yaobaohua.graduateyaobaohua.ui.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Environment;
-import android.support.v4.os.EnvironmentCompat;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.Toast;
-
-import com.yaobaohua.graduateyaobaohua.model.Video;
-import com.yaobaohua.graduateyaobaohua.ui.MyApplication;
-import com.yaobaohua.graduateyaobaohua.ui.activity.MyPlayActivity;
-import com.yaobaohua.graduateyaobaohua.ui.activity.PlayActivity;
-import com.yaobaohua.graduateyaobaohua.utils.ToastUtils;
-import com.yaobaohua.graduateyaobaohua.utils.UtilJump;
 
 import org.xutils.x;
 

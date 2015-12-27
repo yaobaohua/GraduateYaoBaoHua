@@ -91,6 +91,7 @@ public class MyPlayActivity extends BaseActivity implements
     //中间锁屏布局
     @ViewInject(R.id.rl_img_lock_play)
     private RelativeLayout rlLock;
+    //center的数字进度布局
     @ViewInject(R.id.ll_progress_play)
     private LinearLayout llProgress;
     @ViewInject(R.id.tv_speed_play)
@@ -107,8 +108,6 @@ public class MyPlayActivity extends BaseActivity implements
     private String vPath;
     //视频类型
     private String vType;
-    //视频已经播放的进度
-    private Long vPosition;
     //视频的名字
     private String vName;
 
@@ -196,10 +195,13 @@ public class MyPlayActivity extends BaseActivity implements
 
         try {
             videoView.setVideoPath(vPath);
-            if (video.getVideo_progress().equals("0")) {
-                videoView.seekTo(Long.valueOf(video.getVideo_progress()));
+
+            if (!video.getVideo_Type().equals("1")) {
+                videoView.seekTo(Long.valueOf(video.getVideo_Progress()));
+            }else{
+                imgDownLoad.setVisibility(View.INVISIBLE);
             }
-            ;
+
             isPlaying = true;
             videoView.setOnCompletionListener(this);
             videoView.setOnBufferingUpdateListener(this);
@@ -214,9 +216,7 @@ public class MyPlayActivity extends BaseActivity implements
     private void initValues() {
         video = getIntent().getParcelableExtra("video");
         vPath = video.getVideo_Path();
-        vType = video.getVideo_type();
-        vPosition =
-                Long.valueOf(video.getVideo_progress());
+        vType = video.getVideo_Type();
         vName = video.getVideo_Name();
         tvName.setText(vName);
 
@@ -237,7 +237,6 @@ public class MyPlayActivity extends BaseActivity implements
     public void downloadVideo() {
         String url = vPath;
         String label = vName;
-
         try {
             DownloadService.getDownloadManager().startDownload(
                     url, label,
@@ -320,9 +319,25 @@ public class MyPlayActivity extends BaseActivity implements
 
     //在这里写保存当前进度的东西，并且存入播放记录
     private void finishPlay() {
-        long currentPosition = videoView.getCurrentPosition();
-        video.setVideo_progress(currentPosition + "");
-        new VideoDBManager(this).insert(video);
+        if (!vType.equals("1")) {
+            long currentPosition = videoView.getCurrentPosition();
+            VideoDBManager db = new VideoDBManager(this);
+            Video now_video = db.queryAVideoByName(video.getVideo_Name());
+            if (now_video != null) {
+                /**
+                 * 如果数据库已经有
+                 * 1.更新已经播放
+                 * 2.更新进度
+                 */
+                now_video.setVideo_Played("1");
+                now_video.setVideo_Progress(currentPosition + "");
+                db.update(now_video);
+            } else {
+                video.setVideo_Played("1");
+                video.setVideo_Progress(currentPosition + "");
+                db.insert(video);
+            }
+        }
         finish();
     }
 
@@ -387,7 +402,6 @@ public class MyPlayActivity extends BaseActivity implements
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        llProgress.setVisibility(View.GONE);
         if (vPath.startsWith("http")) {
             videoView.setBufferSize(512 * 1024);
         } else {

@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
     <application
         android:name=".ui.MyApplication"
         android:allowBackup="true"
@@ -13,6 +15,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="567f880e67e58efb0f000a87" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
+
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService"></service>
+
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
         <activity android:name=".ui.activity.MyLineChartViewActivity" />
         <activity android:name=".ui.activity.HomeActivity">
@@ -31,9 +49,10 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"></activity>
 
-        <activity android:name=".ui.activity.NativeVideoActivity" />
         <activity android:name=".ui.activity.MyDownLoadVideoActivity" />
         <activity android:name=".ui.activity.PlayHistoryActivity"></activity>
+        <activity android:name=".ui.activity.NativePlayActivity"></activity>
+        <activity android:name=".ui.activity.UpdateVersionActivity"></activity>
     </application>
 
 </manifest>

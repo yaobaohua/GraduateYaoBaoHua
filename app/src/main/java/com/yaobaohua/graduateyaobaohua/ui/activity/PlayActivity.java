@@ -7,14 +7,10 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -32,14 +28,9 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.yaobaohua.graduateyaobaohua.R;
-import com.yaobaohua.graduateyaobaohua.model.NativeVideoModel;
-import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
-import com.yaobaohua.graduateyaobaohua.ui.MyApplication;
 import com.yaobaohua.graduateyaobaohua.utils.ScreenUtils;
 import com.yaobaohua.graduateyaobaohua.utils.ToastUtils;
 
-import org.xutils.ex.DbException;
-import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 

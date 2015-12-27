@@ -17,15 +17,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yaobaohua.graduateyaobaohua.R;
+import com.yaobaohua.graduateyaobaohua.db.VideoDBManager;
 import com.yaobaohua.graduateyaobaohua.model.Video;
 import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
+import com.yaobaohua.graduateyaobaohua.ui.dialog.DialogManager;
 import com.yaobaohua.graduateyaobaohua.ui.download.DownloadInfo;
 import com.yaobaohua.graduateyaobaohua.ui.download.DownloadManager;
 import com.yaobaohua.graduateyaobaohua.ui.download.DownloadService;
 import com.yaobaohua.graduateyaobaohua.ui.download.DownloadState;
 import com.yaobaohua.graduateyaobaohua.ui.download.DownloadViewHolder;
+import com.yaobaohua.graduateyaobaohua.utils.FileSizeFormatUtils;
+import com.yaobaohua.graduateyaobaohua.utils.ToastUtils;
 
-import org.w3c.dom.Text;
 import org.xutils.common.Callback;
 import org.xutils.ex.DbException;
 import org.xutils.view.annotation.ContentView;
@@ -34,7 +37,6 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * @Author yaobaohua
@@ -46,6 +48,8 @@ public class MyDownLoadVideoActivity extends BaseActivity {
 
     @ViewInject(R.id.lv_my_download_video_download)
     private ListView downloadList;
+    @ViewInject(R.id.tv_title)
+    private TextView tvTitle;
 
 
     private DownloadManager downloadManager;
@@ -54,9 +58,17 @@ public class MyDownLoadVideoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setToolbar();
+        tvTitle.setText("我的下载");
         downloadManager = DownloadService.getDownloadManager();
         downloadListAdapter = new DownloadListAdapter();
         downloadList.setAdapter(downloadListAdapter);
+    }
+
+    @Override
+    protected void onRestart() {
+        downloadList.setAdapter(downloadListAdapter);
+        super.onRestart();
     }
 
     private class DownloadListAdapter extends BaseAdapter {
@@ -240,15 +252,30 @@ public class MyDownLoadVideoActivity extends BaseActivity {
                     stopBtn.setVisibility(View.INVISIBLE);
                     rlDownloadTip.setVisibility(View.INVISIBLE);
                     llDownloadItem.removeView(rlDownloadTip);
+                    VideoDBManager db = new VideoDBManager(MyDownLoadVideoActivity.this);
+                    final Video now_video = db.queryAVideoByName(downloadInfo.getLabel());
+                    if (now_video != null) {
+                        now_video.setVideo_Path(downloadInfo.getFileSavePath());
+                        db.update(now_video);
+                    } else {
+                        Video video = new Video();
+                        video.setVideo_Progress("0");
+                        video.setVideo_Path(downloadInfo.getFileSavePath());
+                        video.setVideo_Played("1");
+                        video.setVideo_DownFlag("1");
+                        video.setVideo_Name(downloadInfo.getLabel());
+                        String video_Size = FileSizeFormatUtils.formatSize(downloadInfo.getFileSavePath().length()) + "";
+                        video.setVideo_Size(video_Size);
+                        video.setVideo_Type("2");
+                        db.insert(video);
+                    }
                     downloadList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             showToast(downloadInfo.getFileSavePath());
 
                             Intent intent = new Intent(getApplicationContext(), MyPlayActivity.class);
-
-                            intent.putExtra("video", new Video(downloadInfo.getLabel(), "33", downloadInfo.getFileSavePath(), "333", "2","1"));
-
+                            intent.putExtra("video", now_video);
                             startActivity(intent);
                         }
                     });

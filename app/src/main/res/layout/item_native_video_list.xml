@@ -42,7 +42,7 @@
             android:textColor="@color/gray"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
-            android:text="22m" />
+            android:text="在线" />
 
     </RelativeLayout>
 

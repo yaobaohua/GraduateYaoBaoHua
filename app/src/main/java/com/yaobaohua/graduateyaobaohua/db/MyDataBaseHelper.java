@@ -22,13 +22,15 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     // 创建表
     private static final String url = "create table if not exists "
-            + VideoInfo.Video.TABLE_NAME + "(" + VideoInfo.Video.VIDEO_ID
-            + " integer primary key autoincrement,"
+            + VideoInfo.Video.TABLE_NAME + "("
+            + VideoInfo.Video.VIDEO_ID + " integer primary key autoincrement,"
             + VideoInfo.Video.VIDEO_NAME + " text unique,"
-            + VideoInfo.Video.VIDEO_PATH
-            + " text unique," + VideoInfo.Video.VIDEO_PROGRESS + " text,"
-            + VideoInfo.Video.VIDEO_SIZE + " text," + VideoInfo.Video.VIDEO_TYPE + " text,"
-            + VideoInfo.Video.VIDEO_NATIVE + " text)";
+            + VideoInfo.Video.VIDEO_PATH + " text unique,"
+            + VideoInfo.Video.VIDEO_PROGRESS + " text,"
+            + VideoInfo.Video.VIDEO_SIZE + " text,"
+            + VideoInfo.Video.VIDEO_DOWNFLAG + " text,"
+            + VideoInfo.Video.VIDEO_PLAYED + " text,"
+            + VideoInfo.Video.VIDEO_TYPE + " text)";
 
 
     @Override

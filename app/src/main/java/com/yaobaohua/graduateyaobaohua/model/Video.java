@@ -5,11 +5,10 @@ import android.os.Parcelable;
 
 /**
  * @Author yaobaohua
- * @CreatedTime 2015/12/24 22：30
+ * @CreatedTime 2015/12/26 17：36
  * @DESC :
  */
 public class Video implements Parcelable {
-
     private int video_Id;
 
     private String video_Name;
@@ -18,30 +17,83 @@ public class Video implements Parcelable {
 
     private String video_Path;
 
+    private String video_DownFlag;
+
+    /**
+     * 1.播放过
+     */
+    private String video_Played;
+
+    public Video(String video_Name, String video_Size, String video_Path, String video_DownFlag, String video_Played, String video_Progress, String video_Type) {
+        this.video_Name = video_Name;
+        this.video_Size = video_Size;
+        this.video_Path = video_Path;
+        this.video_DownFlag = video_DownFlag;
+        this.video_Played = video_Played;
+        this.video_Progress = video_Progress;
+        this.video_Type = video_Type;
+    }
+
+    public Video(int video_Id, String video_Name, String video_Size, String video_Path, String video_DownFlag, String video_Played, String video_Progress, String video_Type) {
+        this.video_Id = video_Id;
+        this.video_Name = video_Name;
+        this.video_Size = video_Size;
+        this.video_Path = video_Path;
+        this.video_DownFlag = video_DownFlag;
+        this.video_Played = video_Played;
+        this.video_Progress = video_Progress;
+        this.video_Type = video_Type;
+    }
+
+    @Override
+    public String toString() {
+        return "Video{" +
+                "video_Id=" + video_Id +
+                ", video_Name='" + video_Name + '\'' +
+                ", video_Size='" + video_Size + '\'' +
+                ", video_Path='" + video_Path + '\'' +
+                ", video_DownFlag='" + video_DownFlag + '\'' +
+                ", video_Played='" + video_Played + '\'' +
+                ", video_Progress='" + video_Progress + '\'' +
+                ", video_Type='" + video_Type + '\'' +
+                '}';
+    }
+
+    public String getVideo_Played() {
+        return video_Played;
+    }
+
+    public void setVideo_Played(String video_Played) {
+        this.video_Played = video_Played;
+    }
+
+    public String getVideo_DownFlag() {
+        return video_DownFlag;
+    }
+
+    public void setVideo_DownFlag(String video_DownFlag) {
+        this.video_DownFlag = video_DownFlag;
+    }
+
+
     private String video_Progress;
 
+
     /*
-     * 1:直播，不要进度条，不要下载条
-     * 2.本地，要进度条，不要下载条
-     * 3.网络，都要
-     */
+         * 1:直播，不要进度条，不要下载条
+         * 2.本地，要进度条，不要下载条
+         * 3.网络，都要
+         */
     private String video_Type;
+
     /**
      * 1.是本地
      * 2.不是本地
      */
-    private String video_Native;
-
-    public String getVideo_Native() {
-        return video_Native;
-    }
-
-    public void setVideo_Native(String video_Native) {
-        this.video_Native = video_Native;
-    }
 
     public Video() {
     }
+
 
     protected Video(Parcel in) {
         video_Id = in.readInt();
@@ -50,7 +102,8 @@ public class Video implements Parcelable {
         video_Path = in.readString();
         video_Progress = in.readString();
         video_Type = in.readString();
-        video_Native=in.readString();
+        video_Played = in.readString();
+        video_DownFlag = in.readString();
     }
 
     public static final Creator<Video> CREATOR = new Creator<Video>() {
@@ -65,44 +118,12 @@ public class Video implements Parcelable {
         }
     };
 
-    @Override
-    public String toString() {
-        return "Video{" +
-                "video_Id=" + video_Id +
-                ", video_Name='" + video_Name + '\'' +
-                ", video_Size='" + video_Size + '\'' +
-                ", video_Path='" + video_Path + '\'' +
-                ", video_Progress='" + video_Progress + '\'' +
-                ", video_Type='" + video_Type + '\'' +
-                ", video_Native='" + video_Native + '\'' +
-                '}';
-    }
-
-    public Video(String video_Name, String video_Size, String video_Path, String video_progress, String video_type, String video_Native) {
-        this.video_Name = video_Name;
-        this.video_Size = video_Size;
-        this.video_Path = video_Path;
-        this.video_Progress = video_progress;
-        this.video_Type = video_type;
-        this.video_Native=video_Native;
-    }
-
-    public Video(int video_id, String video_Name, String video_Size, String video_Path, String video_progress, String video_Type,String video_Native) {
-        this.video_Id = video_id;
-        this.video_Name = video_Name;
-        this.video_Size = video_Size;
-        this.video_Path = video_Path;
-        this.video_Progress = video_progress;
-        this.video_Type = video_Type;
-        this.video_Native=video_Native;
-    }
-
-    public int getVideo_id() {
+    public int getVideo_Id() {
         return video_Id;
     }
 
-    public void setVideo_id(int video_id) {
-        this.video_Id = video_id;
+    public void setVideo_Id(int video_Id) {
+        this.video_Id = video_Id;
     }
 
     public String getVideo_Name() {
@@ -129,26 +150,28 @@ public class Video implements Parcelable {
         this.video_Path = video_Path;
     }
 
-    public String getVideo_progress() {
+    public String getVideo_Progress() {
         return video_Progress;
     }
 
-    public void setVideo_progress(String video_progress) {
-        this.video_Progress = video_progress;
+    public void setVideo_Progress(String video_Progress) {
+        this.video_Progress = video_Progress;
     }
 
-    public String getVideo_type() {
+    public String getVideo_Type() {
         return video_Type;
     }
 
-    public void setVideo_type(String video_type) {
-        this.video_Type = video_type;
+    public void setVideo_Type(String video_Type) {
+        this.video_Type = video_Type;
     }
+
 
     @Override
     public int describeContents() {
         return 0;
     }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -158,6 +181,8 @@ public class Video implements Parcelable {
         dest.writeString(video_Path);
         dest.writeString(video_Progress);
         dest.writeString(video_Type);
-        dest.writeString(video_Native);
+        dest.writeString(video_Played);
+        dest.writeString(video_DownFlag);
+
     }
 }
