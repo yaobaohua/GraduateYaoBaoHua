@@ -1,10 +1,12 @@
 package com.yaobaohua.graduateyaobaohua.ui.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,14 +19,12 @@ import com.yaobaohua.graduateyaobaohua.common.Constants;
 import com.yaobaohua.graduateyaobaohua.db.VideoDBManager;
 import com.yaobaohua.graduateyaobaohua.model.Video;
 import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
-import com.yaobaohua.graduateyaobaohua.ui.MyApplication;
 import com.yaobaohua.graduateyaobaohua.ui.adapter.VideoAdapter;
 import com.yaobaohua.graduateyaobaohua.ui.dialog.DialogManager;
 import com.yaobaohua.graduateyaobaohua.utils.FileSizeFormatUtils;
 import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
 import com.yaobaohua.graduateyaobaohua.utils.ToastUtils;
 
-import org.xutils.ex.DbException;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
@@ -126,21 +126,26 @@ public class NativePlayActivity extends BaseActivity {
                 switch (msg.what) {
                     case 10:
                         ArrayList<Video> listData = (ArrayList<Video>) msg.obj;
+                        ArrayList<Video> mList = (ArrayList<Video>) msg.obj;
                         DialogManager.disDialog();
                         SPUtils.put(mActivity.get(), Constants.IS_FIRST_NATIVE, true);
                         for (int i = 0; i < listData.size(); i++) {
                             Video now_video = db.queryAVideoByName(listData.get(i).getVideo_Name());
+                            //r如果已经存过,刚刚扫描出来的肯定不用再次插入了。
                             if (now_video != null) {
                                 listData.get(i).setVideo_Progress(now_video.getVideo_Progress());
                                 listData.get(i).setVideo_Played(now_video.getVideo_Played());
                                 listData.get(i).setVideo_Id(now_video.getVideo_Id());
+                            //    mList.remove(i);
+                             //   listData.remove(listData.get(i));
                             }
+                            //插入
                             if (db.insert(listData.get(i)) == -1) {
 
                             }
 
                         }
-                        setListAdapter(activity.lvNative, listData);
+                        setListAdapter(activity.lvNative, mList);
                         break;
 
                     default:
@@ -227,7 +232,7 @@ public class NativePlayActivity extends BaseActivity {
         @Override
         public void run() {
             listData.clear();
-            listData = printFile(dir, 1);
+            listData = getDataFromStork();
             Message msg = Message.obtain();
             msg.what = 10;
             msg.obj = listData;
@@ -268,5 +273,50 @@ public class NativePlayActivity extends BaseActivity {
         return listData;
     }
 
+
+    private ArrayList<Video> getDataFromStork() {
+        if (this != null) {
+            Cursor cursor = this.getContentResolver().query(
+                    MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null,
+                    null, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    int id = cursor.getInt(cursor
+                            .getColumnIndexOrThrow(MediaStore.Video.Media._ID));
+                    String title = cursor
+                            .getString(cursor
+                                    .getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
+                    String album = cursor
+                            .getString(cursor
+                                    .getColumnIndexOrThrow(MediaStore.Video.Media.ALBUM));
+                    String artist = cursor
+                            .getString(cursor
+                                    .getColumnIndexOrThrow(MediaStore.Video.Media.ARTIST));
+                    String displayName = cursor
+                            .getString(cursor
+                                    .getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME));
+                    String mimeType = cursor
+                            .getString(cursor
+                                    .getColumnIndexOrThrow(MediaStore.Video.Media.MIME_TYPE));
+                    String path = cursor
+                            .getString(cursor
+                                    .getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
+                    long duration = cursor
+                            .getInt(cursor
+                                    .getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
+                    long size = cursor
+                            .getLong(cursor
+                                    .getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
+                    Video video = new Video(title,
+                            String.valueOf(size),
+                            path, "1", "0", "0", "2");
+                    listData.add(video);
+                }
+                cursor.close();
+            }
+        }
+        return listData;
+
+    }
 
 }

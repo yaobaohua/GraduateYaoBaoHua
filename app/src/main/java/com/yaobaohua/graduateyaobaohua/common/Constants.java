@@ -20,24 +20,26 @@ public class Constants {
     public final static String PASSWORD = "password";
     public final static String IS_FIRST_NATIVE = "is_first";
 
+    public final static String QQ_OPEN_ID = "user_openId";
+    public final static String USER_OBJECT_ID = "objectId";
+
+    public final static String  VIDEO_USER_ID="video_userId";
+    public final static String  VIDEO_PATH="video_Path";
+    public final static String  ISLOGIN="is_login";
 
     public static final String DEVICE_ID = "DEVICE_ID";
     public static final String EMULATOR_DEVICE_ID = "EMULATOR_DEVICE_ID";
     public static final String VERSION_NUMBER = "VERSION_NUMBER";
     public static final String USERPWD = "USERPWD";
-    public static final String USERTYPE = "USERTYPE";
-    public static final String LASTTIME_AFFAIRMAIN = "lastTimeAffairMain";
-    public static final String COOKIE_KEY = "COOKIE_KEY";
-    public static final String COOKIE_VALUE = "COOKIE_VALUE";
-    public static final String PUSH = "PUSH_SWITCH";
-    public static final String APPCODE_KEY = "APPCODE_KEY";
-    public static final String NOTIFICATION_ICON = "NOTIFICATION_ICON";
 
 
     //app公用的字段
     public final static String APP_ID = "appId";
     public final static String APP_Version = "appVersion";
     public final static String ACCESS_TOKEN = "accessToken";
+    public final static String QQ_APP_ID = "1105049644";
+    public final static String QQ_SCOPE = "all";
+
 
     public final static String DOWN_LOAD_PATH = Environment.getExternalStorageDirectory() + File.separator + "yaoMovie";
 

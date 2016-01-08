@@ -263,6 +263,7 @@ public class MyDownLoadVideoActivity extends BaseActivity {
                         video.setVideo_Path(downloadInfo.getFileSavePath());
                         video.setVideo_Played("1");
                         video.setVideo_DownFlag("1");
+                        video.setVideo_previewImg(video.getVideo_previewImg());
                         video.setVideo_Name(downloadInfo.getLabel());
                         String video_Size = FileSizeFormatUtils.formatSize(downloadInfo.getFileSavePath().length()) + "";
                         video.setVideo_Size(video_Size);

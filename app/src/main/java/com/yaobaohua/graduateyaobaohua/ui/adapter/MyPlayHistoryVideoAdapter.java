@@ -1,12 +1,6 @@
 package com.yaobaohua.graduateyaobaohua.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +11,11 @@ import android.widget.TextView;
 import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.model.Video;
 import com.yaobaohua.graduateyaobaohua.ui.MyApplication;
-import com.yaobaohua.graduateyaobaohua.utils.FileSizeFormatUtils;
-import com.yaobaohua.graduateyaobaohua.utils.MyImageLoader;
-import com.yaobaohua.graduateyaobaohua.utils.SwitchButton;
 
 import org.xutils.image.ImageOptions;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.text.FieldPosition;
 import java.util.List;
 
 /**
@@ -33,17 +23,16 @@ import java.util.List;
  * @CreatedTime 2015/12/25 11：56
  * @DESC :
  */
-public class VideoAdapter extends BaseAdapter {
+public class MyPlayHistoryVideoAdapter extends BaseAdapter {
 
     private Context context;
     private List<Video> mDatas;
     ImageOptions options;
 
-    public VideoAdapter(Context context, List<Video> mDatas) {
+    public MyPlayHistoryVideoAdapter(Context context, List<Video> mDatas) {
         this.context = context;
         this.mDatas = mDatas;
         options = new ImageOptions.Builder().setUseMemCache(true).build();
-
     }
 
     @Override
@@ -62,7 +51,6 @@ public class VideoAdapter extends BaseAdapter {
     }
 
 
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         MyViewHolder holder;
@@ -77,14 +65,9 @@ public class VideoAdapter extends BaseAdapter {
         holder.videoName.setText(mDatas.get(position).getVideo_Name());
         holder.videoCount.setText(mDatas.get(position).getVideo_Id() + "");
         holder.videoSize.setText(mDatas.get(position).getVideo_Size());
-        //为防止图片错位，把图片每次都setTag()
-        holder.imgCut.setTag(mDatas.get(position).getVideo_Path());
-        MyApplication.getImageLoader().setImageByNativePath(holder.imgCut,mDatas.get(position).getVideo_Path());
+        x.image().bind(holder.imgCut, mDatas.get(position).getVideo_previewImg());
         return convertView;
     }
-
-
-
 
 
     class MyViewHolder {

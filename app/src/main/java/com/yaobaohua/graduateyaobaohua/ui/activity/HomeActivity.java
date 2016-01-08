@@ -23,6 +23,8 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
+
 /**
  * @Author yaobaohua
  * @CreatedTime 2015/12/21 16/16
@@ -47,6 +49,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bmob.initialize(this,"6239ec7e1826d6880330e9e415971a0a");
         setToolbar();
         setLeftButton(-1);
         tabTextViews = new ArrayList<>();

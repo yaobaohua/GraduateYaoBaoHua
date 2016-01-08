@@ -1,15 +1,22 @@
 package com.yaobaohua.graduateyaobaohua.ui.adapter;
 
-import java.util.ArrayList;
-
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.yaobaohua.graduateyaobaohua.common.Constants;
+import com.yaobaohua.graduateyaobaohua.model.Video;
+import com.yaobaohua.graduateyaobaohua.ui.activity.MyPlayActivity;
+import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
+
 import org.xutils.x;
+
+import java.util.ArrayList;
 
 /**
  * 图片轮播适配器
@@ -46,18 +53,20 @@ public class MyShufflingFigureAdapter extends PagerAdapter {
         /**
          * 这里写轮播图的点击事件
          */
-//        imageView.setOnClickListener(new OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, MyPlayActivity.class);
-//                String path = "http://www.modrails.com/videos/passenger_nginx.mov";
-//                intent.putExtra("video", new Video("西游记", "33", path, "0", "3"));
-//                context.startActivity(intent);
-//            }
-//        });
+        imageView.setOnClickListener(new OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MyPlayActivity.class);
+                String path ="http://www.114zhibo.com/player/huashu.html?id=474";
+                String video_userId= (String) SPUtils.get(context,Constants.USER_OBJECT_ID,"");
+                String video_previewImg="http://qzapp.qlogo.cn/qzapp/1104915383/573797EE46101CDF15930A955DD53D27/30";
+                intent.putExtra("video", new Video( video_userId,"天堂","33", path,video_previewImg, "0", "0", "0", "3"));
+                context.startActivity(intent);
+            }
+        });
 
+       // Inventory  the history of the top ten computer viruses in recent years
         // 如果View已经在之前添加到了一个父组件，则必须先remove，否则会抛出IllegalStateException。
         // ViewParent vp = imageView.getParent();
         //

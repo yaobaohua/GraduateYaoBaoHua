@@ -3,13 +3,59 @@ package com.yaobaohua.graduateyaobaohua.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
+import cn.bmob.v3.BmobObject;
+
 /**
  * @Author yaobaohua
  * @CreatedTime 2015/12/26 17：36
  * @DESC :
  */
-public class Video implements Parcelable {
+public class Video extends BmobObject implements Serializable {
     private int video_Id;
+
+    private String video_userId;
+    private String video_previewImg;
+
+    public String getVideo_previewImg() {
+        return video_previewImg;
+    }
+
+    public void setVideo_previewImg(String video_previewImg) {
+        this.video_previewImg = video_previewImg;
+    }
+
+    public String getVideo_userId() {
+        return video_userId;
+    }
+
+    public void setVideo_userId(String video_userId) {
+        this.video_userId = video_userId;
+    }
+
+    public Video(String video_userId, String video_Name, String video_Size, String video_Path,String video_previewImg, String video_DownFlag, String video_Played, String video_Progress, String video_Type) {
+        this.video_userId = video_userId;
+        this.video_previewImg=video_previewImg;
+        this.video_Name = video_Name;
+        this.video_Size = video_Size;
+        this.video_Path = video_Path;
+        this.video_DownFlag = video_DownFlag;
+        this.video_Played = video_Played;
+        this.video_Progress = video_Progress;
+        this.video_Type = video_Type;
+    }
+
+
+    public Video(String video_Name, String video_Size, String video_Path, String video_DownFlag, String video_Played, String video_Progress, String video_Type) {
+        this.video_Name = video_Name;
+        this.video_Size = video_Size;
+        this.video_Path = video_Path;
+        this.video_DownFlag = video_DownFlag;
+        this.video_Played = video_Played;
+        this.video_Progress = video_Progress;
+        this.video_Type = video_Type;
+    }
 
     private String video_Name;
 
@@ -24,15 +70,7 @@ public class Video implements Parcelable {
      */
     private String video_Played;
 
-    public Video(String video_Name, String video_Size, String video_Path, String video_DownFlag, String video_Played, String video_Progress, String video_Type) {
-        this.video_Name = video_Name;
-        this.video_Size = video_Size;
-        this.video_Path = video_Path;
-        this.video_DownFlag = video_DownFlag;
-        this.video_Played = video_Played;
-        this.video_Progress = video_Progress;
-        this.video_Type = video_Type;
-    }
+
 
     public Video(int video_Id, String video_Name, String video_Size, String video_Path, String video_DownFlag, String video_Played, String video_Progress, String video_Type) {
         this.video_Id = video_Id;
@@ -95,28 +133,7 @@ public class Video implements Parcelable {
     }
 
 
-    protected Video(Parcel in) {
-        video_Id = in.readInt();
-        video_Name = in.readString();
-        video_Size = in.readString();
-        video_Path = in.readString();
-        video_Progress = in.readString();
-        video_Type = in.readString();
-        video_Played = in.readString();
-        video_DownFlag = in.readString();
-    }
 
-    public static final Creator<Video> CREATOR = new Creator<Video>() {
-        @Override
-        public Video createFromParcel(Parcel in) {
-            return new Video(in);
-        }
-
-        @Override
-        public Video[] newArray(int size) {
-            return new Video[size];
-        }
-    };
 
     public int getVideo_Id() {
         return video_Id;
@@ -166,23 +183,4 @@ public class Video implements Parcelable {
         this.video_Type = video_Type;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(video_Id);
-        dest.writeString(video_Name);
-        dest.writeString(video_Size);
-        dest.writeString(video_Path);
-        dest.writeString(video_Progress);
-        dest.writeString(video_Type);
-        dest.writeString(video_Played);
-        dest.writeString(video_DownFlag);
-
-    }
 }

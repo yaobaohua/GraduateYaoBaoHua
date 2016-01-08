@@ -12,6 +12,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/rl_login_my"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

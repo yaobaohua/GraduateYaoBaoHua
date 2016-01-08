@@ -8,25 +8,19 @@
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+
     <application
         android:name=".ui.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="567f880e67e58efb0f000a87" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="Channel ID" />
-
-        <service
-            android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService"></service>
 
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
@@ -53,6 +47,40 @@
         <activity android:name=".ui.activity.PlayHistoryActivity"></activity>
         <activity android:name=".ui.activity.NativePlayActivity"></activity>
         <activity android:name=".ui.activity.UpdateVersionActivity"></activity>
+        <activity android:name=".ui.activity.PersonalInfoActivity"></activity>
+        <activity android:name=".ui.activity.MyPlayHistoryActivity"></activity>
+
+
+        <!--腾讯qq-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1105049644" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--友盟-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="567f880e67e58efb0f000a87" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
+
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService"></service>
     </application>
 
 </manifest>

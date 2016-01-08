@@ -8,6 +8,7 @@ import android.telephony.TelephonyManager;
 
 import com.yaobaohua.graduateyaobaohua.common.Constants;
 import com.yaobaohua.graduateyaobaohua.utils.ActivityManager;
+import com.yaobaohua.graduateyaobaohua.utils.MyImageLoader;
 import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
 
 import org.xutils.BuildConfig;
@@ -22,6 +23,12 @@ import java.util.Random;
  */
 public class MyApplication extends Application {
     private ActivityManager activityManager = null;
+
+    private static MyImageLoader imageLoader;
+
+    public static MyImageLoader getImageLoader() {
+        return imageLoader;
+    }
 
     public ActivityManager getActivityManager() {
         return activityManager;
@@ -44,7 +51,7 @@ public class MyApplication extends Application {
 
     public static DbManager db;
 
-    public  static DbManager getDbManager() {
+    public static DbManager getDbManager() {
         return db;
     }
 
@@ -55,7 +62,7 @@ public class MyApplication extends Application {
         x.Ext.init(this);
         x.Ext.setDebug(BuildConfig.DEBUG);
         db = x.getDb(MyApplication.daoConfig);
-
+        imageLoader = new MyImageLoader();
         // 初始化自定义Activity管理器
         activityManager = ActivityManager.getActivityManager();
     }

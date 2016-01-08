@@ -24,13 +24,21 @@ import com.yaobaohua.graduateyaobaohua.common.Constants;
 import com.yaobaohua.graduateyaobaohua.db.VideoDBManager;
 import com.yaobaohua.graduateyaobaohua.model.Video;
 import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
+import com.yaobaohua.graduateyaobaohua.ui.adapter.MyPlayHistoryVideoAdapter;
 import com.yaobaohua.graduateyaobaohua.ui.download.DownloadService;
+import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
 
 import org.xutils.ex.DbException;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnSeekCompleteListener;
 import io.vov.vitamio.Vitamio;
@@ -192,16 +200,13 @@ public class MyPlayActivity extends BaseActivity implements
 
     private void startPlay() {
         llProgress.setVisibility(View.VISIBLE);
-
         try {
             videoView.setVideoPath(vPath);
-
             if (!video.getVideo_Type().equals("1")) {
                 videoView.seekTo(Long.valueOf(video.getVideo_Progress()));
-            }else{
+            } else {
                 imgDownLoad.setVisibility(View.INVISIBLE);
             }
-
             isPlaying = true;
             videoView.setOnCompletionListener(this);
             videoView.setOnBufferingUpdateListener(this);
@@ -214,12 +219,43 @@ public class MyPlayActivity extends BaseActivity implements
     }
 
     private void initValues() {
-        video = getIntent().getParcelableExtra("video");
+        video = (Video) getIntent().getSerializableExtra("video");
+
+        /*
+         * 1:直播，不要进度条，不要下载条
+         * 2.本地，要进度条，不要下载条
+         * 3.网络，都要
+         */
+
+        //播放流程
+        //拿到一个video
+        //如果是本地的视频，
+        if(video.getVideo_Type().equals("1")){
+            //已经做过处理
+        }else if(video.getVideo_Type().equals("2")){
+            //直播不用做处理
+        }else if(video.getVideo_Type().equals("3")){
+            //在Bmob数据库查询
+            BmobQuery<Video> query = new BmobQuery<>();
+            query.addWhereEqualTo(Constants.VIDEO_USER_ID, video.getVideo_userId());
+            query.addWhereEqualTo(Constants.VIDEO_PATH, video.getVideo_Path());
+            query.findObjects(this, new FindListener<Video>() {
+                @Override
+                public void onSuccess(List<Video> list) {
+                    video=list.get(0);
+                }
+
+                @Override
+                public void onError(int i, String s) {
+                    showToast("查询失败");
+                }
+            });
+        }
+
         vPath = video.getVideo_Path();
         vType = video.getVideo_Type();
         vName = video.getVideo_Name();
         tvName.setText(vName);
-
     }
 
     private void initLayoutVisiable() {
@@ -319,8 +355,8 @@ public class MyPlayActivity extends BaseActivity implements
 
     //在这里写保存当前进度的东西，并且存入播放记录
     private void finishPlay() {
-        if (!vType.equals("1")) {
-            long currentPosition = videoView.getCurrentPosition();
+        long currentPosition = videoView.getCurrentPosition();
+        if (vType.equals("2")) {
             VideoDBManager db = new VideoDBManager(this);
             Video now_video = db.queryAVideoByName(video.getVideo_Name());
             if (now_video != null) {
@@ -338,8 +374,56 @@ public class MyPlayActivity extends BaseActivity implements
                 db.insert(video);
             }
         }
+        //判断是在线视频
+        if (video.getVideo_Type() != null && video.getVideo_Type().equals("3")) {
+            final String video_userId = video.getVideo_userId();
+            video.setVideo_Progress(currentPosition + "");
+            video.setVideo_Played("1");
+            if (video_userId != null && (!video_userId.equals(""))) {
+                video.save(this, new SaveListener() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    //如果插入失败，表示已经插入过这个
+                    @Override
+                    public void onFailure(int i, String s) {
+
+                        BmobQuery<Video> query = new BmobQuery<Video>();
+                        query.addWhereEqualTo(Constants.VIDEO_USER_ID, video_userId).addWhereEqualTo(Constants.VIDEO_PATH, video.getVideo_Path());
+                        query.findObjects(getApplicationContext(), new FindListener<Video>() {
+                            //查询成功在更新
+                            @Override
+                            public void onSuccess(List<Video> list) {
+                                String user_objectId = list.get(0).getObjectId();
+                                video.update(getApplicationContext(), user_objectId, new UpdateListener() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(int i, String s) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onError(int i, String s) {
+
+                            }
+                        });
+                    }
+                });
+            }
+
+        }
+
+
         finish();
     }
+
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {

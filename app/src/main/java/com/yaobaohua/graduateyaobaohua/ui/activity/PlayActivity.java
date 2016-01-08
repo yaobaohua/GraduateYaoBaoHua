@@ -51,7 +51,7 @@ import io.vov.vitamio.widget.VideoView;
 /**
  * @Author yaobaohuae
  * @CreatedTime 2015/12/21 17/04
- * @DESC :
+ * @DESC :原先的播放界面
  */
 public class PlayActivity extends Activity implements OnClickListener,
         OnBufferingUpdateListener, OnCompletionListener, OnPreparedListener,
@@ -146,6 +146,18 @@ public class PlayActivity extends Activity implements OnClickListener,
         if (type.equals("1")) {
             seekBar.setVisibility(View.GONE);
         }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     private void setPlayNameDate() {

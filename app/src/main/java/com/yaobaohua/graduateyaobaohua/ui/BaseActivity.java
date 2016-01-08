@@ -70,7 +70,7 @@ public class BaseActivity extends AppCompatActivity implements IBase, Toolbar.On
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-//        toolbar.setLogo(R.drawable.action_line_v);
+        toolbar.setLogo(R.drawable.action_line_v);
         toolbar.setNavigationIcon(R.drawable.app_back);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
