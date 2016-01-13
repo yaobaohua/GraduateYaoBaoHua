@@ -10,4 +10,5 @@
     <color name="orange">#ff8000</color><!--绿色 -->
     <color name="white">#ffffff</color><!--绿色 -->
     <color name="transparent">#ffffffff</color><!--绿色 -->
+    <color name="lightgray">#999999</color><!--浅灰-->
 </resources>

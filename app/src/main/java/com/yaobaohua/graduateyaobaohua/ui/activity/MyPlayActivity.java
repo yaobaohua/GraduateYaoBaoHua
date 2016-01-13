@@ -229,11 +229,11 @@ public class MyPlayActivity extends BaseActivity implements
 
         //播放流程
         //拿到一个video
-        //如果是本地的视频，
+        //int sMax
         if(video.getVideo_Type().equals("1")){
             //已经做过处理
         }else if(video.getVideo_Type().equals("2")){
-            //直播不用做处理
+
         }else if(video.getVideo_Type().equals("3")){
             //在Bmob数据库查询
             BmobQuery<Video> query = new BmobQuery<>();
@@ -242,7 +242,7 @@ public class MyPlayActivity extends BaseActivity implements
             query.findObjects(this, new FindListener<Video>() {
                 @Override
                 public void onSuccess(List<Video> list) {
-                    video=list.get(0);
+                  //  video=list.get(0);
                 }
 
                 @Override
@@ -331,11 +331,13 @@ public class MyPlayActivity extends BaseActivity implements
                     videoView.pause();
                     imgPlay.setImageResource(R.mipmap.ic_controller_pause);
                     isPlaying = false;
+                    if(!vType.equals("1"))
                     mSeekBar.setEnabled(false);
                 } else {
                     imgPlay.setImageResource(R.mipmap.video_play_img);
                     videoView.start();
                     isPlaying = true;
+                    if(!vType.equals("1"))
                     mSeekBar.setEnabled(true);
                 }
 
@@ -553,7 +555,7 @@ public class MyPlayActivity extends BaseActivity implements
 
         @Override
         public void run() {
-            if (!isFinish) {
+            if (!isFinish&&!vType.equals("1")) {
                 mHandler.sendMessage(Message.obtain());
                 mHandler.postDelayed(update, 1000);
             }
@@ -566,9 +568,9 @@ public class MyPlayActivity extends BaseActivity implements
             if (videoView == null) {
                 return;
             }
-            tvPlayTime.setText(StringUtils.generateTime(videoView
-                    .getCurrentPosition()));
-            if (videoView != null) {
+            if (videoView != null&&!vType.equals("1")) {
+                tvPlayTime.setText(StringUtils.generateTime(videoView
+                        .getCurrentPosition()));
                 seekBar(videoView.getCurrentPosition());
             }
 
@@ -579,7 +581,10 @@ public class MyPlayActivity extends BaseActivity implements
     private void seekBar(long size) {
         if (videoView.isPlaying()) {
             long mMax = videoView.getDuration();
-            int sMax = mSeekBar.getMax();
+            int sMax=0;
+            if (!vType.equals("1")) {
+                 sMax = mSeekBar.getMax();
+            }
             if (!vType.equals("1")) {
                 mSeekBar.setProgress((int) (size * sMax / mMax));
             }
