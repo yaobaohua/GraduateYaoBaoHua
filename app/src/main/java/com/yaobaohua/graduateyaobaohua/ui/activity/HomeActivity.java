@@ -13,12 +13,13 @@ import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
 import com.yaobaohua.graduateyaobaohua.ui.fragment.MainFragment;
 import com.yaobaohua.graduateyaobaohua.ui.fragment.MyFragment;
 import com.yaobaohua.graduateyaobaohua.ui.fragment.NetPlayFragment;
+import com.yaobaohua.graduateyaobaohua.ui.activity.secondActivity.SecondHomeActivity;
 import com.yaobaohua.graduateyaobaohua.ui.widget.TabTextView;
+import com.yaobaohua.graduateyaobaohua.utils.UtilJump;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,7 +194,7 @@ public class HomeActivity extends BaseActivity {
             case R.id.item_activity_my_person:
                 break;
             case R.id.item_activity_my_more:
-
+                UtilJump.jump2Act(this, SecondHomeActivity.class);
                 break;
         }
         return true;

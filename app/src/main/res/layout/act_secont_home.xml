@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_title" />
+
+    <FrameLayout
+        android:id="@+id/layout_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_a"
+            style="@style/main_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/second_rb_index_dt"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="主页" />
+
+        <RadioButton
+            android:id="@+id/rb_b"
+            style="@style/main_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/second_rb_care_dt"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="关注" />
+
+        <RadioButton
+            android:id="@+id/rb_c"
+            style="@style/main_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/second_rb_friend_dt"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="朋友" />
+
+        <RadioButton
+            android:id="@+id/rb_d"
+            style="@style/main_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/second_rb_more_dt"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="我的" />
+
+
+    </RadioGroup>
+
+</LinearLayout>

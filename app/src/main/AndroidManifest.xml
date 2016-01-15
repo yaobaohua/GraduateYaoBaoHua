@@ -50,6 +50,7 @@
         <activity android:name=".ui.activity.PersonalInfoActivity"></activity>
         <activity android:name=".ui.activity.MyPlayHistoryActivity"></activity>
         <activity android:name=".ui.activity.CircleProgressActivity"></activity>
+        <activity android:name=".ui.activity.secondActivity.SecondHomeActivity"></activity>
 
 
         <!--腾讯qq-->
