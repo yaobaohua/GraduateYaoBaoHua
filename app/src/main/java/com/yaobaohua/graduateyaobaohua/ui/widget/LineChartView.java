@@ -1,22 +1,22 @@
 package com.yaobaohua.graduateyaobaohua.ui.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Toast;
 
 
+import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.model.RateDate;
 import com.yaobaohua.graduateyaobaohua.utils.ScreenUtils;
-import com.yaobaohua.graduateyaobaohua.utils.ToastUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -25,6 +25,31 @@ import java.util.ArrayList;
  * Created by yaobaohua on 2015/12/7 0007. Email 2584899504@qq.com
  */
 public class LineChartView extends View {
+
+    //网格线画笔
+    private Paint gridPaint;
+    //坐标轴文字画笔
+    private Paint textPaint;
+    //利率线画笔
+    private Paint ratePaint;
+    //当日利率的文字画笔
+    private Paint textWithBGPaint;
+    //当日利率文字背景
+    private Paint textBGPaint;
+
+    //网格有色背景画笔
+    private Paint gridBgPaint;
+    //频幕宽度
+    private int screenWidth;
+    /**
+     * 离上方和左侧的距离为每格宽度的1/3。
+     */
+    private int marginLeftAndTop;
+
+    private Drawable textbackground;//文字的背景
+
+    public ArrayList<RateDate> mDatas;
+
     public LineChartView(Context context) {
         this(context, null);
     }
@@ -33,27 +58,19 @@ public class LineChartView extends View {
         this(context, attrs, 0);
     }
 
-    private Paint gridPaint;
-
-    private Paint textPaint;
-
-    private Paint ratePaint;
-
-    private Paint textWithBGPaint;
-
-
-    private Paint gridBgPaing;
-
-    private int screenWidth;
-    /**
-     * 离上方和左侧的距离为每格宽度的一半。
-     */
-    private int marginLeftAndTop;
-
-    public ArrayList<RateDate> mDatas;
-
     public LineChartView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        TypedArray style = context.obtainStyledAttributes(attrs, R.styleable.LineChartView);
+
+        int count = style.getIndexCount();
+        for (int i = 0; i < count; i++) {
+            int attr = style.getIndex(i);
+            switch (attr) {
+                case R.styleable.LineChartView_today_background:
+                    textbackground = style.getDrawable(attr);
+                    break;
+            }
+        }
         initViews();
     }
 
@@ -68,14 +85,14 @@ public class LineChartView extends View {
         everyWidth = screenWidth / 7;
         everyHeigt = everyWidth / 2;
 
-        marginLeftAndTop = everyWidth / 2;
+        marginLeftAndTop = everyWidth / 3;
 
         gridPaint = new Paint();
         gridPaint.setColor(Color.parseColor("#d1d1d1"));
         gridPaint.setStrokeWidth(1);
 
         textPaint = new Paint();
-        textPaint.setColor(Color.parseColor("#FFFD7201"));
+        textPaint.setColor(Color.parseColor("#999999"));
         textPaint.setTextSize(18);
         textPaint.setAntiAlias(true);
 
@@ -92,11 +109,16 @@ public class LineChartView extends View {
 
         textWithBGPaint = new Paint();
         textWithBGPaint.setColor(Color.parseColor("#ffffff"));
-        textWithBGPaint.setTextSize(18);
+        textWithBGPaint.setTextSize(22);
+        textWithBGPaint.setAntiAlias(true);
 
+        textBGPaint = new Paint();
+        textBGPaint.setColor(Color.parseColor("#FFFD7201"));
+        textBGPaint.setTextSize(18);
+        textBGPaint.setAntiAlias(true);
 
-        gridBgPaing = new Paint();
-        gridBgPaing.setColor(Color.parseColor("#fffdf8"));
+        gridBgPaint = new Paint();
+        gridBgPaint.setColor(Color.parseColor("#fffdf8"));
     }
 
     private int everyWidth;// 每格宽度
@@ -108,24 +130,46 @@ public class LineChartView extends View {
 
         setBackGroud(canvas);
 
-        if (mDatas.size() < 7 || mDatas == null) {
-            ToastUtils.show(getContext(), "数据不完整...", Toast.LENGTH_LONG);
-        } else {
+        /**
+         * 横线
+         */
+        for (int i = 0; i < 7; i++) {
+            if (i != 6) {
+                canvas.drawLine(marginLeftAndTop + everyWidth * 2 / 3,
+                        marginLeftAndTop + i * everyHeigt, screenWidth,
+                        marginLeftAndTop + i * everyHeigt, gridPaint);
+            } else {
+                canvas.drawLine(marginLeftAndTop, i * everyHeigt
+                        + marginLeftAndTop, screenWidth, marginLeftAndTop + i
+                        * everyHeigt, gridPaint);
+            }
 
             /**
-             * 横线
+             * 竖线
              */
-            for (int i = 0; i < 7; i++) {
-                if (i != 6) {
-                    canvas.drawLine(marginLeftAndTop + everyWidth * 2 / 3,
-                            marginLeftAndTop + i * everyHeigt, screenWidth,
-                            marginLeftAndTop + i * everyHeigt, gridPaint);
-                } else {
-                    canvas.drawLine(marginLeftAndTop, i * everyHeigt
-                            + marginLeftAndTop, screenWidth, marginLeftAndTop + i
-                            * everyHeigt, gridPaint);
-                }
+            canvas.drawLine(marginLeftAndTop + i * everyWidth,
+                    marginLeftAndTop / 2, marginLeftAndTop + i * everyWidth,
+                    marginLeftAndTop + 6 * everyHeigt, gridPaint);
+
+            /**
+             * 文字居中
+             */
+            if (mDatas != null && (mDatas.size() == 7)) {
+                Rect textRect = new Rect();
+                textPaint.getTextBounds(mDatas.get(i).getDateString(), 0,
+                        mDatas.get(i).getDateString().length(), textRect);
+                int textWidth = textRect.width();
+                canvas.drawText(mDatas.get(i).getDateString(), marginLeftAndTop + i
+                        * everyWidth - textWidth / 2, 7 * everyHeigt - everyHeigt
+                        / 3 + marginLeftAndTop, textPaint);
             }
+
+        }
+
+
+        if (mDatas.size() < 7 || mDatas == null) {
+
+        } else {
             /**
              * 开始解决y轴上的值 首先得到七日化利率最大和最小值。
              *
@@ -157,41 +201,22 @@ public class LineChartView extends View {
             float everyValue = scale;
             DecimalFormat df = new DecimalFormat("###.000");
 
-            /**
-             * 画文字Y轴上
-             */
+            Path path = new Path();
             for (int i = 0; i < 7; i++) {
-                Rect textRect = new Rect();
+                /**
+                 * 画文字Y轴上
+                 */
+                Rect textRect2 = new Rect();
                 textPaint.getTextBounds(df.format(minY + i * scale) + "",
                         0, (df.format(minY + i * scale) + "").length(),
-                        textRect);
-                int textHeight = textRect.height();
+                        textRect2);
+                int textHeight2 = textRect2.height();
                 if (i != 6) {
                     canvas.drawText(df.format(minY + i * scale) + "",
                             marginLeftAndTop + everyHeigt / 3, marginLeftAndTop + (5 - i)
-                                    * everyHeigt + textHeight / 2, textPaint);
+                                    * everyHeigt + textHeight2 / 2, textPaint);
                 }
-            }
-            /**
-             * 竖线
-             */
-            for (int j = 0; j < 7; j++) {
-                canvas.drawLine(marginLeftAndTop + j * everyWidth,
-                        marginLeftAndTop / 2, marginLeftAndTop + j * everyWidth,
-                        marginLeftAndTop + 6 * everyHeigt, gridPaint);
-                /**
-                 * 文字居中 倒是候有具体数字的时候可以把代码提出
-                 */
-                Rect textRect = new Rect();
-                textPaint.getTextBounds(mDatas.get(j).getDateString(), 0,
-                        mDatas.get(j).getDateString().length(), textRect);
-                int textWidth = textRect.width();
-                canvas.drawText(mDatas.get(j).getDateString(), marginLeftAndTop + j
-                        * everyWidth - textWidth / 2, 7 * everyHeigt - everyHeigt
-                        / 3 + marginLeftAndTop, textPaint);
-            }
-            Path path = new Path();
-            for (int i = 0; i < 7; i++) {
+
 
                 float y1 = (marginLeftAndTop + 5 * everyHeigt - ((mDatas.get(i).getRate() - minY) / everyValue * everyHeigt));
                 float x1 = marginLeftAndTop + (i) * everyWidth;
@@ -208,45 +233,45 @@ public class LineChartView extends View {
                      * 画文字背景图
                      */
                     Rect textRect = new Rect();
-                    textPaint.getTextBounds(
+                    textWithBGPaint.getTextBounds(
                             df.format(mDatas.get(6).getRate()) + "", 0,
                             (df.format(mDatas.get(6).getRate()) + "").length(),
                             textRect);
                     int textHeight = textRect.height();
                     int textWidth = textRect.width();
 
-                    RectF oval3 = new RectF(marginLeftAndTop + i * everyWidth
-                            - textWidth, y2
-                            - everyHeigt, marginLeftAndTop + i * everyWidth
-                            - textWidth / 2 + textWidth * 3 / 2,
-                            y2 - everyHeigt / 2 + textHeight);// 设置个新的长方形
+                    Rect oval3 = new Rect(marginLeftAndTop + i * everyWidth
+                            - textWidth / 2 - textWidth / 3, (int) y2
+                            - textHeight * 2 - textHeight / 2, marginLeftAndTop + i * everyWidth
+                            - textWidth / 2 + textWidth + textWidth / 3,
+                            (int) (y2 - textHeight / 2));// 设置个新的长方形
 
-                    canvas.drawRoundRect(oval3, 10, 15, textPaint);
+                    //  canvas.drawRoundRect(oval3, 10, 10, textBGPaint);
+                    textbackground.setBounds(oval3);//为文字设置背景
+                    textbackground.draw(canvas);//画入画布中
 
                     /**
                      * 画文字。
                      */
                     canvas.drawText(df.format(mDatas.get(i).getRate()) + "",
                             marginLeftAndTop + i * everyWidth - textWidth / 2,
-                            y2 - everyHeigt / 2,
+                            y2 - textHeight,
                             textWithBGPaint);
 
-                }
 
-
-                if (i == 6) {
-                    float y2 = (marginLeftAndTop + 5 * everyHeigt - ((mDatas.get(i).getRate() - minY) / everyValue * everyHeigt));
+                    float y3 = (marginLeftAndTop + 5 * everyHeigt - ((mDatas.get(i).getRate() - minY) / everyValue * everyHeigt));
                     /**
                      * 画外层的小圆点。
                      */
                     canvas.drawCircle(marginLeftAndTop + i * everyWidth,
-                            y2, 12, textPaint);
+                            y3, 12, textBGPaint);
                     /**
                      * 内层
                      */
                     canvas.drawCircle(marginLeftAndTop + i * everyWidth,
-                            y2, 6, textWithBGPaint);
+                            y3, 6, textWithBGPaint);
                 }
+
 
             }
 
@@ -274,47 +299,30 @@ public class LineChartView extends View {
         for (int i = 1; i < 7; i++) {
 
             Rect rect = new Rect();
+            //
             rect.left = marginLeftAndTop + 1 * everyWidth;
 
             rect.right = marginLeftAndTop + 2 * everyWidth;
 
-            rect.top = marginLeftAndTop + (i - 1) * everyHeigt;
+            rect.top = marginLeftAndTop / 2 + (i - 1) * everyHeigt;
 
-            rect.bottom = marginLeftAndTop + (i) * everyHeigt;
+            rect.bottom = marginLeftAndTop / 2 + (i) * everyHeigt;
 
-            canvas.drawRect(rect, gridBgPaing);
+            //第一列
+            canvas.drawRect(rect, gridBgPaint);
 
-        }
-
-        for (int i = 1; i < 7; i++) {
-
-            Rect rect = new Rect();
+            //第二列
             rect.left = marginLeftAndTop + 3 * everyWidth;
-
             rect.right = marginLeftAndTop + 4 * everyWidth;
+            canvas.drawRect(rect, gridBgPaint);
 
-            rect.top = marginLeftAndTop + (i - 1) * everyHeigt;
-
-            rect.bottom = marginLeftAndTop + (i) * everyHeigt;
-
-            canvas.drawRect(rect, gridBgPaing);
-
-        }
-
-        for (int i = 1; i < 7; i++) {
-
-            Rect rect = new Rect();
+            //第三列
             rect.left = marginLeftAndTop + 5 * everyWidth;
-
             rect.right = marginLeftAndTop + 6 * everyWidth;
-
-            rect.top = marginLeftAndTop + (i - 1) * everyHeigt;
-
-            rect.bottom = marginLeftAndTop + (i) * everyHeigt;
-
-            canvas.drawRect(rect, gridBgPaing);
+            canvas.drawRect(rect, gridBgPaint);
 
         }
+
 
     }
 

@@ -11,4 +11,6 @@
     <color name="white">#ffffff</color><!--绿色 -->
     <color name="transparent">#ffffffff</color><!--绿色 -->
     <color name="lightgray">#999999</color><!--浅灰-->
+
+    <color name="common_main_orange">#fd6e34</color><!--橙色-->
 </resources>

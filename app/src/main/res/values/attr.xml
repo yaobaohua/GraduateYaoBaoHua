@@ -7,4 +7,14 @@
         <attr name="tab_textsize" format="dimension" />
         <attr name="tab_textcolor" format="color" />
     </declare-styleable>
+
+
+    <declare-styleable name="CircleProgressView">
+        <attr name="today_air_background" format="color|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="LineChartView">
+        <attr name="today_background" format="color|reference" />
+    </declare-styleable>
 </resources>
+

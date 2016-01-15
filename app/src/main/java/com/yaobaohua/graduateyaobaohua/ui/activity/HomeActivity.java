@@ -186,9 +186,15 @@ public class HomeActivity extends BaseActivity {
         return true;
     }
 
+    //主框架中的menu在这写。
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.item_activity_my_person:
+                break;
+            case R.id.item_activity_my_more:
+
+                break;
         }
         return true;
     }

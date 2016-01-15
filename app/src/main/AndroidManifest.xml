@@ -49,6 +49,7 @@
         <activity android:name=".ui.activity.UpdateVersionActivity"></activity>
         <activity android:name=".ui.activity.PersonalInfoActivity"></activity>
         <activity android:name=".ui.activity.MyPlayHistoryActivity"></activity>
+        <activity android:name=".ui.activity.CircleProgressActivity"></activity>
 
 
         <!--腾讯qq-->
