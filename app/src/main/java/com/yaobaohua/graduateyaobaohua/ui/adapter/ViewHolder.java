@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yaobaohua.graduateyaobaohua.R;
+import com.yaobaohua.graduateyaobaohua.utils.ScreenUtils;
 
 import org.xutils.common.util.DensityUtil;
 import org.xutils.image.ImageOptions;
@@ -114,13 +115,13 @@ public class ViewHolder {
      * @param viewId
      * @return
      */
-    public ViewHolder setImageByUrl(int viewId, String url)
+    public ViewHolder setImageByUrlAndSize(int viewId, String url,int imageWidth,int imageHeight)
 
     {
         ImageOptions imageOptions;
         imageOptions = new ImageOptions.Builder()
 
-                //.setSize(DensityUtil.dip2px(120), DensityUtil.dip2px(120))
+                .setSize(DensityUtil.dip2px(imageWidth), DensityUtil.dip2px(imageHeight))
                 .setRadius(DensityUtil.dip2px(5))
                 // 如果ImageView的大小不是定义为wrap_content, 不要crop.
                 .setCrop(true)
@@ -135,6 +136,25 @@ public class ViewHolder {
         return this;
     }
 
+    public ViewHolder setImageByUrl(int viewId, String url)
+
+    {
+        ImageOptions imageOptions;
+        imageOptions = new ImageOptions.Builder()
+
+                .setRadius(DensityUtil.dip2px(5))
+                // 如果ImageView的大小不是定义为wrap_content, 不要crop.
+                .setCrop(true)
+                // 加载中或错误图片的ScaleType
+                //.setPlaceholderScaleType(ImageView.ScaleType.MATRIX)
+                .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+                .setLoadingDrawableId(R.mipmap.ic_launcher)
+                .setFailureDrawableId(R.mipmap.ic_launcher)
+                .build();
+
+        x.image().bind((ImageView) getView(viewId), url, imageOptions);
+        return this;
+    }
     public int getPosition() {
         return mPosition;
     }

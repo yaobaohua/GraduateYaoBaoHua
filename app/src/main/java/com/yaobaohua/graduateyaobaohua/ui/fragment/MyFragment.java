@@ -1,7 +1,6 @@
 package com.yaobaohua.graduateyaobaohua.ui.fragment;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,7 +12,6 @@ import com.yaobaohua.graduateyaobaohua.ui.activity.MyDownLoadVideoActivity;
 import com.yaobaohua.graduateyaobaohua.ui.activity.MyPlayHistoryActivity;
 import com.yaobaohua.graduateyaobaohua.ui.activity.NativePlayActivity;
 import com.yaobaohua.graduateyaobaohua.ui.activity.PersonalInfoActivity;
-import com.yaobaohua.graduateyaobaohua.ui.activity.PlayHistoryActivity;
 import com.yaobaohua.graduateyaobaohua.ui.activity.UpdateVersionActivity;
 import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
 import com.yaobaohua.graduateyaobaohua.utils.UtilJump;

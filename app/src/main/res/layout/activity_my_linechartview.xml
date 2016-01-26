@@ -20,7 +20,7 @@
         android:orientation="vertical">
 
 
-        <com.cx.banking.ui.widget.LineChartView
+        <com.yaobaohua.graduateyaobaohua.ui.widget.LineChartView
 
             android:id="@+id/my_line_chart_view_pocket"
             android:layout_width="match_parent"

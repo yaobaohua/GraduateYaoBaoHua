@@ -83,6 +83,31 @@ public class Video extends BmobObject implements Serializable {
         this.video_Type = video_Type;
     }
 
+    public Video(int video_Id, String video_userId, String video_previewImg, String video_Name, String video_Size, String video_Path, String video_DownFlag, String video_Played, String video_Progress, String video_Type) {
+        this.video_Id = video_Id;
+        this.video_userId = video_userId;
+        this.video_previewImg = video_previewImg;
+        this.video_Name = video_Name;
+        this.video_Size = video_Size;
+        this.video_Path = video_Path;
+        this.video_DownFlag = video_DownFlag;
+        this.video_Played = video_Played;
+        this.video_Progress = video_Progress;
+        this.video_Type = video_Type;
+    }
+
+    public Video(int video_Id, String video_previewImg, String video_Name, String video_Size, String video_Path, String video_DownFlag, String video_Played, String video_Progress, String video_Type) {
+        this.video_Id = video_Id;
+        this.video_previewImg = video_previewImg;
+        this.video_Name = video_Name;
+        this.video_Size = video_Size;
+        this.video_Path = video_Path;
+        this.video_DownFlag = video_DownFlag;
+        this.video_Played = video_Played;
+        this.video_Progress = video_Progress;
+        this.video_Type = video_Type;
+    }
+
     @Override
     public String toString() {
         return "Video{" +

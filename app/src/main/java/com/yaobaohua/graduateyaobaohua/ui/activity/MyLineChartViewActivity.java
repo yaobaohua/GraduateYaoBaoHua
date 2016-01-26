@@ -1,10 +1,9 @@
 package com.yaobaohua.graduateyaobaohua.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.ViewUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.model.RateDate;
 import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
@@ -13,7 +12,6 @@ import com.yaobaohua.graduateyaobaohua.utils.ScreenUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.ArrayList;
 
@@ -30,6 +28,7 @@ public class MyLineChartViewActivity extends BaseActivity {
 
     @ViewInject(R.id.ll_line_chart_view)
     private LinearLayout llLineChart;
+
     @ViewInject(R.id.my_line_chart_view_pocket)
     LineChartView lineChartView;
 
@@ -51,7 +50,7 @@ public class MyLineChartViewActivity extends BaseActivity {
         list.add(new RateDate(2.33f, "12-30"));
         list.add(new RateDate(2.39f, "12-31"));
 
-
+        LineChartView lineChartView = (LineChartView) findViewById(R.id.my_line_chart_view_pocket);
         lineChartView.fillDateForRateDate(list);
 
         int width = ScreenUtils.getScreenW(this);

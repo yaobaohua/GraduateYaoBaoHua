@@ -2,12 +2,12 @@ package com.yaobaohua.graduateyaobaohua.ui.activity.secondActivity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.widget.FrameLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.yaobaohua.graduateyaobaohua.R;
+import com.yaobaohua.graduateyaobaohua.model.Video;
 import com.yaobaohua.graduateyaobaohua.ui.BaseActivity;
 import com.yaobaohua.graduateyaobaohua.ui.fragment.secondfragment.SecondCareFragment;
 import com.yaobaohua.graduateyaobaohua.ui.fragment.secondfragment.SecondFriendFragment;
@@ -24,81 +24,85 @@ import org.xutils.view.annotation.ViewInject;
  * @DESC :
  */
 @ContentView(R.layout.act_secont_home)
-public class SecondHomeActivity extends BaseActivity {
-
-
-    @ViewInject(R.id.radio_group)
-    RadioGroup radioGroup;
-
-    @ViewInject(R.id.rb_a)
-    RadioButton rb_index;
-
-
-    @ViewInject(R.id.layout_frame)
-    FrameLayout layout_frame;
-
+public class SecondHomeActivity extends BaseActivity implements SecondHomeFragment.onClick2FriendFragmentListener {
+    @ViewInject(R.id.rb_c)
+    RadioButton rb_c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SecondHomeFragment homeFragment = new SecondHomeFragment();
+        changeFragment(homeFragment);
     }
-    /**
-     * 当Activity已经初始化完毕时
-     */
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        rb_index.setChecked(true);
-    }
+
 
     @Event(value = {R.id.radio_group}, type = RadioGroup.OnCheckedChangeListener.class)
     private void onCheckedEvent(RadioGroup group, int checkedId) {
-        int index = 0;
         switch (checkedId) {
             case R.id.rb_a:
-                index = 10;
+                SecondHomeFragment homeFragment = new SecondHomeFragment();
+                switchContent(currentFragment, homeFragment);
                 break;
             case R.id.rb_b:
-                index = 20;
+                SecondCareFragment careFragment = new SecondCareFragment();
+                switchContent(currentFragment, careFragment);
                 break;
             case R.id.rb_c:
-                index = 30;
+                SecondFriendFragment friendFragment = new SecondFriendFragment();
+                switchContent(currentFragment, friendFragment);
                 break;
             case R.id.rb_d:
-                index = 40;
+                SecondMyFragment myFragment = new SecondMyFragment();
+                switchContent(currentFragment, myFragment);
                 break;
         }
-        Fragment fragment =
-                (Fragment) fragmentAdapter.instantiateItem(layout_frame, index);
+    }
 
-        fragmentAdapter.setPrimaryItem(layout_frame, 0, fragment);
-        fragmentAdapter.finishUpdate(layout_frame);
+    Fragment currentFragment;
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+        currentFragment = fragment;
+    }
+
+    private void changeFragment(Fragment fragment) {
+        FragmentTransaction transaction;
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.layout_frame, fragment);
+        transaction.commit();
+
+
     }
 
 
-    FragmentStatePagerAdapter fragmentAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-        @Override
-        public Fragment getItem(int arg0) {
-            switch (arg0) {
-                case 10:
-                    return new SecondHomeFragment();
-                case 20:
-                    return new SecondCareFragment();
-                case 30:
-                    return new SecondFriendFragment();
-                case 40:
-                    return new SecondMyFragment();
-                default:
-                    return new SecondHomeFragment();
+    public void switchContent(Fragment from, Fragment to) {
+        if (currentFragment != to) {
+            currentFragment = to;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                    android.R.anim.fade_in, R.anim.out_to_left);
+            ;
+            if (!to.isAdded()) {    // 先判断是否被add过
+                transaction.hide(from).add(R.id.layout_frame, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
-
-        @Override
-        public int getCount() {
-            return 4;
-        }
-
-    };
+    }
 
 
+    @Override
+    public void switch2Friend(String name, String tag) {
+        SecondFriendFragment friendFragment = SecondFriendFragment.newInstance(name, tag);
+        switchContent(currentFragment, friendFragment);
+        rb_c.setChecked(true);
+    }
+
+    @Override
+    public void switch2FriendWithVideo(Video video) {
+        SecondFriendFragment friendFragment = SecondFriendFragment.newInstanceByVideo(video);
+        switchContent(currentFragment, friendFragment);
+        rb_c.setChecked(true);
+    }
 }

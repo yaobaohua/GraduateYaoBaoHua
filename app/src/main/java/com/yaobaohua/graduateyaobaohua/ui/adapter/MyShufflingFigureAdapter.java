@@ -57,12 +57,12 @@ public class MyShufflingFigureAdapter extends PagerAdapter {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MyPlayActivity.class);
-                String path ="http://www.114zhibo.com/player/huashu.html?id=474";
-                String video_userId= (String) SPUtils.get(context,Constants.USER_OBJECT_ID,"");
-                String video_previewImg="http://qzapp.qlogo.cn/qzapp/1104915383/573797EE46101CDF15930A955DD53D27/30";
-                intent.putExtra("video", new Video( video_userId,"天堂","33", path,video_previewImg, "0", "0", "0", "3"));
-                context.startActivity(intent);
+//                Intent intent = new Intent(context, MyPlayActivity.class);
+//                String path ="http://www.114zhibo.com/player/huashu.html?id=474";
+//                String video_userId= (String) SPUtils.get(context,Constants.USER_OBJECT_ID,"");
+//                String video_previewImg="http://qzapp.qlogo.cn/qzapp/1104915383/573797EE46101CDF15930A955DD53D27/30";
+//                intent.putExtra("video", new Video( video_userId,"天堂","33", path,video_previewImg, "0", "0", "0", "3"));
+//                context.startActivity(intent);
             }
         });
 

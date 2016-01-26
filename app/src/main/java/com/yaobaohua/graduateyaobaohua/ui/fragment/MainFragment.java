@@ -1,6 +1,7 @@
 package com.yaobaohua.graduateyaobaohua.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,19 +11,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.yaobaohua.graduateyaobaohua.R;
+import com.yaobaohua.graduateyaobaohua.common.Constants;
+import com.yaobaohua.graduateyaobaohua.model.Video;
+import com.yaobaohua.graduateyaobaohua.ui.activity.MyPlayActivity;
+import com.yaobaohua.graduateyaobaohua.ui.adapter.CommonAdapter;
 import com.yaobaohua.graduateyaobaohua.ui.adapter.MyShufflingFigureAdapter;
 import com.yaobaohua.graduateyaobaohua.ui.BaseFragment;
+import com.yaobaohua.graduateyaobaohua.ui.adapter.ViewHolder;
+import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
+import com.yaobaohua.graduateyaobaohua.utils.ScreenUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.common.util.LogUtil;
+import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 public class MainFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
 
@@ -49,11 +69,15 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.frag_main,null);
-        x.view().inject(this,view);
+        View view = inflater.inflate(R.layout.frag_main, null);
+        x.view().inject(this, view);
         initLunBoData();
+
+        initGridDataAndFillGrid();
+
         return view;
     }
+
 
     public void initLunBoData() {
         //第一步,初始化存放图片地址的ArrayList<String>
@@ -218,7 +242,115 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
         setCurrentPoint(arg0);
         handler.sendMessage(Message.obtain(handler,
                 DotImageHandler.MSG_PAGE_CHANGED, arg0, 0));
+    }
+
+    @ViewInject(R.id.gird_main_frag)
+    private GridView grid;
+
+    private List<Video> listData = new ArrayList<>();
+
+    private void initGridDataAndFillGrid() {
+        initGridData();
 
     }
+
+
+
+    private void initGridData() {
+        final String video_userId= (String) SPUtils.get(getActivity(),Constants.USER_OBJECT_ID,"");
+        String url = Constants.REQUEST_URL;
+        RequestParams params = new RequestParams(url);
+        params.addBodyParameter("action", "aaa");
+        final int width=ScreenUtils.getScreenW(getContext())/3;
+
+        x.http().get(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    Video video;
+                    if(listData.size()>0){
+                        listData.clear();
+                    }
+                    JSONArray jsonArray = new JSONArray(result);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject obj = jsonArray.getJSONObject(i);
+                        int video_id = obj.getInt("video_id");
+                        String video_desc = obj.getString("video_desc");
+                        String video_name = obj.getString("video_name");
+                        String video_path = obj.getString("video_path");
+                        String video_img = obj.getString("video_img");
+                        video=new Video(video_id,video_userId,video_img,video_name,"0",video_path,"0","0","0","3");
+                        listData.add(video);
+                    }
+
+
+                    grid.setAdapter(new CommonAdapter<Video>(getContext(),listData,R.layout.item_gird_online_main_frag) {
+                        @Override
+                        public void convert(ViewHolder holder, Video item) {
+
+                            holder.setImageByUrlAndSize(R.id.iv_grid_main,item.getVideo_previewImg(),80,120);
+                            holder.setText(R.id.tv_gird_main,item.getVideo_Name());
+
+                        }
+                    });
+
+                    grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                            final Intent intent=new Intent(getActivity(), MyPlayActivity.class);
+
+                            if(listData.get(position).getVideo_Type().equals("3")){
+                                //在Bmob数据库查询
+                                BmobQuery<Video> query = new BmobQuery<>();
+                                query.addWhereEqualTo(Constants.VIDEO_USER_ID, listData.get(position).getVideo_userId());
+                                query.addWhereEqualTo(Constants.VIDEO_PATH, listData.get(position).getVideo_Path());
+                                query.findObjects(getContext(), new FindListener<Video>() {
+                                    @Override
+                                    public void onSuccess(List<Video> list) {
+                                         Video video=list.get(0);
+                                        intent.putExtra("video",video);
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onError(int i, String s) {
+                                        intent.putExtra("video",listData.get(position));
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                showToast("error");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                showToast("cancel");
+            }
+
+            @Override
+            public void onFinished() {
+                showToast("finish");
+            }
+        });
+    }
+
 }
 

@@ -34,17 +34,13 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.activity.PlayActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="landscape"></activity>
+
         <activity
             android:name=".ui.activity.MyPlayActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"></activity>
 
         <activity android:name=".ui.activity.MyDownLoadVideoActivity" />
-        <activity android:name=".ui.activity.PlayHistoryActivity"></activity>
         <activity android:name=".ui.activity.NativePlayActivity"></activity>
         <activity android:name=".ui.activity.UpdateVersionActivity"></activity>
         <activity android:name=".ui.activity.PersonalInfoActivity"></activity>

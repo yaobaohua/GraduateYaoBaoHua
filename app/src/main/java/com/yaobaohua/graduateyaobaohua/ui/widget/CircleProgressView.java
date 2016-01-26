@@ -254,7 +254,7 @@ public class CircleProgressView extends View {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     float angle1 = (float) animation.getAnimatedValue();
-                    Log.i("angle1", "angle1:=" + angle1);
+               //     Log.i("angle1", "angle1:=" + angle1);
                     angle = startAngle + angle1;
                     nowValue = (int) (angle1 / 260 * totalValue);
 

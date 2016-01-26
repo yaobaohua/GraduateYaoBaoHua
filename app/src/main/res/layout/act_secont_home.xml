@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
+            android:checked="true"
             android:drawableTop="@drawable/second_rb_index_dt"
             android:gravity="center"
             android:padding="5dp"
@@ -64,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:checked="true"
+
             android:drawableTop="@drawable/second_rb_more_dt"
             android:gravity="center"
             android:padding="5dp"

@@ -3,9 +3,16 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="wocao"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btn_switch_to_friend"
+        android:text="fragment跳fragment带参数"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_switch_to_friend_with_object"
+        android:text="fragment跳fragment带对象"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

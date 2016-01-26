@@ -13,4 +13,18 @@
         android:background="#999999"
         app:today_air_background="@drawable/button_bg" />
 
+    <com.yaobaohua.graduateyaobaohua.ui.widget.CircleProgressView
+        android:id="@+id/circle_circle_progress_2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="#999999"
+        app:today_air_background="@drawable/button_bg" />
+
+
+    <com.yaobaohua.graduateyaobaohua.ui.widget.CircleProgressView
+        android:id="@+id/circle_circle_progress_3"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="#999999"
+        app:today_air_background="@drawable/button_bg" />
 </LinearLayout>

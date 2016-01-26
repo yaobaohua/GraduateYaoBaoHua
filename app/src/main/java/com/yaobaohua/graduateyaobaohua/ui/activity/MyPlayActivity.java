@@ -227,31 +227,6 @@ public class MyPlayActivity extends BaseActivity implements
          * 3.网络，都要
          */
 
-        //播放流程
-        //拿到一个video
-        //int sMax
-        if(video.getVideo_Type().equals("1")){
-            //已经做过处理
-        }else if(video.getVideo_Type().equals("2")){
-
-        }else if(video.getVideo_Type().equals("3")){
-            //在Bmob数据库查询
-            BmobQuery<Video> query = new BmobQuery<>();
-            query.addWhereEqualTo(Constants.VIDEO_USER_ID, video.getVideo_userId());
-            query.addWhereEqualTo(Constants.VIDEO_PATH, video.getVideo_Path());
-            query.findObjects(this, new FindListener<Video>() {
-                @Override
-                public void onSuccess(List<Video> list) {
-                  //  video=list.get(0);
-                }
-
-                @Override
-                public void onError(int i, String s) {
-                    showToast("查询失败");
-                }
-            });
-        }
-
         vPath = video.getVideo_Path();
         vType = video.getVideo_Type();
         vName = video.getVideo_Name();

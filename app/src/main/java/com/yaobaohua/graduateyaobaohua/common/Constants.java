@@ -43,5 +43,7 @@ public class Constants {
 
     public final static String DOWN_LOAD_PATH = Environment.getExternalStorageDirectory() + File.separator + "yaoMovie";
 
+    public final static String REQUEST_URL="http://172.16.0.40:8080/GraduateYao/api.jsp?";
+
 
 }
