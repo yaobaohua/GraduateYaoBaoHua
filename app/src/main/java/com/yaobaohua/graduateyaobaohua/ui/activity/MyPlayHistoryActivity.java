@@ -1,6 +1,9 @@
 package com.yaobaohua.graduateyaobaohua.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,6 +48,12 @@ public class MyPlayHistoryActivity extends BaseActivity {
         selectHistoryPlayedFromNet();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        selectHistoryPlayedFromNet();
+    }
+
     private void selectHistoryPlayedFromNet() {
         String video_userId = (String) SPUtils.get(this, Constants.VIDEO_USER_ID, "");
         if (video_userId != null && !video_userId.equals("")) {
@@ -55,7 +64,7 @@ public class MyPlayHistoryActivity extends BaseActivity {
                 public void onSuccess(List<Video> list) {
                     listData = list;
                     lvRecord.setAdapter(new MyPlayHistoryVideoAdapter(getApplicationContext(), listData));
-
+                    initClick();
                 }
 
                 @Override
@@ -64,6 +73,18 @@ public class MyPlayHistoryActivity extends BaseActivity {
                 }
             });
         }
+
+    }
+
+    private void initClick() {
+        lvRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(MyPlayHistoryActivity.this,MyPlayActivity.class);
+                intent.putExtra("video",listData.get(position));
+                startActivity(intent);
+            }
+        });
 
     }
 

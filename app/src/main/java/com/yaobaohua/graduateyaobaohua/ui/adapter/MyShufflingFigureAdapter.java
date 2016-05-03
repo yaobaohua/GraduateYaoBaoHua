@@ -57,16 +57,18 @@ public class MyShufflingFigureAdapter extends PagerAdapter {
 
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(context, MyPlayActivity.class);
-//                String path ="http://www.114zhibo.com/player/huashu.html?id=474";
-//                String video_userId= (String) SPUtils.get(context,Constants.USER_OBJECT_ID,"");
-//                String video_previewImg="http://qzapp.qlogo.cn/qzapp/1104915383/573797EE46101CDF15930A955DD53D27/30";
-//                intent.putExtra("video", new Video( video_userId,"天堂","33", path,video_previewImg, "0", "0", "0", "3"));
-//                context.startActivity(intent);
+
+                String path = "http://183.203.30.17/vlive.qqvideo.tc.qq.com/b0020kta6nd.p412.1.mp4?sdtfrom=v1000&type=mp4&vkey=4C51B229F3ED72555DD5D9E28572516B9E5E4EA43033AA99C91E985591E13BDDAE131D05A7010429AECCCABEC582017A768BCC86CD835B4F72E55B42588B067364BF7B6BB8DEC2A44256C0E16DC3E8FA81EA3529081D437E&level=0&platform=11&br=85&fmt=hd&sp=0&guid=BA7D9E71BE7A1D6C5BD84928AC22634C916C1477&locid=2fdffc2d-16e2-4021-ae95-c9f49bb26150&size=18868075&ocid=2567837100";
+                Intent intent = new Intent(context, MyPlayActivity.class);
+
+                String video_userId= (String) SPUtils.get(context,Constants.USER_OBJECT_ID,"");
+                String video_previewImg="http://qzapp.qlogo.cn/qzapp/1104915383/573797EE46101CDF15930A955DD53D27/30";
+                intent.putExtra("video", new Video( video_userId,"骑士老鹰game1","0", path,video_previewImg, "0", "0", "0", "3"));
+                context.startActivity(intent);
             }
         });
 
-       // Inventory  the history of the top ten computer viruses in recent years
+        // Inventory  the history of the top ten computer viruses in recent years
         // 如果View已经在之前添加到了一个父组件，则必须先remove，否则会抛出IllegalStateException。
         // ViewParent vp = imageView.getParent();
         //

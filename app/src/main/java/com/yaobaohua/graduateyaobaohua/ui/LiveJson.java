@@ -13,13 +13,13 @@ public class LiveJson {
           "            \"id\": 1,\n" +
           "            \"name\": \"四川卫视\",\n" +
           "            \"logo\": \"http://s13.sinaimg.cn/orignal/4992b460cc67cbc27aa9c \",\n" +
-          "            \"videoUrl\": \"http://www.apifree.net/tv/qqlive.jsp?tvid=100001400\"\n" +
+          "            \"videoUrl\": \"http://fms.cntv.lxdns.com/live/flv/channel50.flv\"\n" +
           "        },\n" +
           "        {\n" +
           "            \"id\": 2,\n" +
           "            \"name\": \"陕西卫视\",\n" +
           "            \"logo\": \"http://img2.ph.126.net/bypiiUbtQW2xaG1qZAud1Q==/6597175319773976732.jpg \",\n" +
-          "            \"videoUrl\": \"http://www.apifree.net/tv/qqlive.jsp?tvid=100006400\"\n" +
+          "            \"videoUrl\": \"http://fms.cntv.lxdns.com/live/flv/channel6.flv\"\n" +
           "        },\n" +
           "        {\n" +
           "            \"id\": 3,\n" +

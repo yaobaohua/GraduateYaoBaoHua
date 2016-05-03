@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,11 +19,12 @@ import android.widget.RelativeLayout;
 import com.yaobaohua.graduateyaobaohua.R;
 import com.yaobaohua.graduateyaobaohua.common.Constants;
 import com.yaobaohua.graduateyaobaohua.model.Video;
+import com.yaobaohua.graduateyaobaohua.ui.BaseFragment;
 import com.yaobaohua.graduateyaobaohua.ui.activity.MyPlayActivity;
 import com.yaobaohua.graduateyaobaohua.ui.adapter.CommonAdapter;
 import com.yaobaohua.graduateyaobaohua.ui.adapter.MyShufflingFigureAdapter;
-import com.yaobaohua.graduateyaobaohua.ui.BaseFragment;
 import com.yaobaohua.graduateyaobaohua.ui.adapter.ViewHolder;
+import com.yaobaohua.graduateyaobaohua.ui.widget.MyGirdView;
 import com.yaobaohua.graduateyaobaohua.utils.SPUtils;
 import com.yaobaohua.graduateyaobaohua.utils.ScreenUtils;
 
@@ -32,7 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
-import org.xutils.common.util.LogUtil;
+import org.xutils.common.util.DensityUtil;
 import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -82,6 +82,9 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     public void initLunBoData() {
         //第一步,初始化存放图片地址的ArrayList<String>
         adPicture.clear();
+
+
+
         adPicture
                 .add("http://img.mukewang.com/55237dcc0001128c06000338.jpg");
         adPicture
@@ -95,12 +98,15 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
         adPicture
                 .add("http://img.mukewang.com/547ed1c9000150cc06000338.jpg");
 
+
+
         //2.得到下面小圆圈的数量
         count = adPicture.size();
         //3.给ViewPager设置适配器
         home_viewPager
                 .setAdapter(new MyShufflingFigureAdapter(getActivity(), adPicture));
         home_viewPager.setOnPageChangeListener(this);
+
         initPageResoure();
     }
 
@@ -245,30 +251,30 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     @ViewInject(R.id.gird_main_frag)
-    private GridView grid;
+    private MyGirdView grid;
 
     private List<Video> listData = new ArrayList<>();
 
     private void initGridDataAndFillGrid() {
+
         initGridData();
 
     }
 
 
-
     private void initGridData() {
-        final String video_userId= (String) SPUtils.get(getActivity(),Constants.USER_OBJECT_ID,"");
+        final String video_userId = (String) SPUtils.get(getActivity(), Constants.USER_OBJECT_ID, "");
         String url = Constants.REQUEST_URL;
         RequestParams params = new RequestParams(url);
         params.addBodyParameter("action", "aaa");
-        final int width=ScreenUtils.getScreenW(getContext())/3;
+        final int width = ScreenUtils.getScreenW(getContext()) / 3;
 
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 try {
                     Video video;
-                    if(listData.size()>0){
+                    if (listData.size() > 0) {
                         listData.clear();
                     }
                     JSONArray jsonArray = new JSONArray(result);
@@ -279,28 +285,35 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
                         String video_name = obj.getString("video_name");
                         String video_path = obj.getString("video_path");
                         String video_img = obj.getString("video_img");
-                        video=new Video(video_id,video_userId,video_img,video_name,"0",video_path,"0","0","0","3");
+                        video = new Video(video_id, video_userId, video_img, video_name, "0", video_path, "0", "0", "0", "3");
                         listData.add(video);
                     }
 
+                    final int width = ScreenUtils.getScreenW(getContext()) / 3;
+                    final int widthDp = DensityUtil.px2dip(width * 97 / 100);
+                    final int heightDp = DensityUtil.px2dip(width * 97 / 100 * 3 / 2);
 
-                    grid.setAdapter(new CommonAdapter<Video>(getContext(),listData,R.layout.item_gird_online_main_frag) {
+
+                    grid.setAdapter(new CommonAdapter<Video>(getContext(), listData, R.layout.item_gird_online_main_frag) {
                         @Override
                         public void convert(ViewHolder holder, Video item) {
 
-                            holder.setImageByUrlAndSize(R.id.iv_grid_main,item.getVideo_previewImg(),80,120);
-                            holder.setText(R.id.tv_gird_main,item.getVideo_Name());
+                            holder.setImageByUrlAndSize(R.id.iv_grid_main, item.getVideo_previewImg(), widthDp, heightDp);
+                            holder.setText(R.id.tv_gird_main, item.getVideo_Name());
 
                         }
                     });
-
+                    home_viewPager.setFocusable(true);
+                    home_viewPager.setFocusableInTouchMode(true);
+                    home_viewPager.requestFocus();
+                    grid.setFocusable(false);
                     grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                            final Intent intent=new Intent(getActivity(), MyPlayActivity.class);
+                            final Intent intent = new Intent(getActivity(), MyPlayActivity.class);
 
-                            if(listData.get(position).getVideo_Type().equals("3")){
+                            if (listData.get(position).getVideo_Type().equals("3")) {
                                 //在Bmob数据库查询
                                 BmobQuery<Video> query = new BmobQuery<>();
                                 query.addWhereEqualTo(Constants.VIDEO_USER_ID, listData.get(position).getVideo_userId());
@@ -308,14 +321,14 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
                                 query.findObjects(getContext(), new FindListener<Video>() {
                                     @Override
                                     public void onSuccess(List<Video> list) {
-                                         Video video=list.get(0);
-                                        intent.putExtra("video",video);
+                                        Video video = list.get(0);
+                                        intent.putExtra("video", video);
                                         startActivity(intent);
                                     }
 
                                     @Override
                                     public void onError(int i, String s) {
-                                        intent.putExtra("video",listData.get(position));
+                                        intent.putExtra("video", listData.get(position));
                                         startActivity(intent);
                                     }
                                 });
@@ -323,10 +336,6 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
 
                         }
                     });
-
-
-
-
 
 
                 } catch (JSONException e) {

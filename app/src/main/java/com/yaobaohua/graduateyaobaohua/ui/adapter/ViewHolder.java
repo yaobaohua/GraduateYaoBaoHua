@@ -128,8 +128,9 @@ public class ViewHolder {
                 // 加载中或错误图片的ScaleType
                 //.setPlaceholderScaleType(ImageView.ScaleType.MATRIX)
                 .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-                .setLoadingDrawableId(R.mipmap.ic_launcher)
-                .setFailureDrawableId(R.mipmap.ic_launcher)
+                .setLoadingDrawableId(R.mipmap.logo_online)
+                .setFailureDrawableId(R.mipmap.logo_online)
+                .setUseMemCache(true)
                 .build();
 
         x.image().bind((ImageView) getView(viewId), url, imageOptions);

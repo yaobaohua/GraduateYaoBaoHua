@@ -76,6 +76,7 @@ public class VideoAdapter extends BaseAdapter {
         }
         holder.videoName.setText(mDatas.get(position).getVideo_Name());
         holder.videoCount.setText(mDatas.get(position).getVideo_Id() + "");
+        holder.videoCount.setVisibility(View.INVISIBLE);
         holder.videoSize.setText(mDatas.get(position).getVideo_Size());
         //为防止图片错位，把图片每次都setTag()
         holder.imgCut.setTag(mDatas.get(position).getVideo_Path());

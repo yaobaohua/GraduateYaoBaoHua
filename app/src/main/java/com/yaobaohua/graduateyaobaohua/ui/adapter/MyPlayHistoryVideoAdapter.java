@@ -65,6 +65,8 @@ public class MyPlayHistoryVideoAdapter extends BaseAdapter {
         holder.videoName.setText(mDatas.get(position).getVideo_Name());
         holder.videoCount.setText(mDatas.get(position).getVideo_Id() + "");
         holder.videoSize.setText(mDatas.get(position).getVideo_Size());
+        holder.videoSize.setVisibility(View.INVISIBLE);
+        holder.videoCount.setVisibility(View.INVISIBLE);
         x.image().bind(holder.imgCut, mDatas.get(position).getVideo_previewImg());
         return convertView;
     }

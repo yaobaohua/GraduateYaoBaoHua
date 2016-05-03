@@ -14,7 +14,6 @@ public class Constants {
      * 是否是第一次进程序的标志
      */
     public static final String IS_FIRST = "IS_FIRST";
-    public static final String BASE_URL = "";
     public static final String USERNAME = "username";
     public static final String ISONLINE = "isOnline";
     public final static String PASSWORD = "password";
@@ -43,7 +42,7 @@ public class Constants {
 
     public final static String DOWN_LOAD_PATH = Environment.getExternalStorageDirectory() + File.separator + "yaoMovie";
 
-    public final static String REQUEST_URL="http://172.16.0.40:8080/GraduateYao/api.jsp?";
+    public final static String REQUEST_URL="http://192.168.0.101:8080/GraduateYao/api.jsp?";
 
 
 }

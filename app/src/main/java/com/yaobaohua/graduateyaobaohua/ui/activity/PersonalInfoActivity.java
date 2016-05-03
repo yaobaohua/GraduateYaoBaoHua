@@ -101,7 +101,7 @@ public class PersonalInfoActivity extends BaseActivity {
     }
 
 
-    @Event(R.id.img_person_login)
+    @Event({R.id.img_person_login,R.id.btn_login_login})
     private void onClick(View view) {
         if ((boolean) SPUtils.get(this, Constants.ISLOGIN, false)) {
             logout();

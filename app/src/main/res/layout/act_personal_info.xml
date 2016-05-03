@@ -34,12 +34,13 @@
                 android:layout_marginRight="40dp"
                 android:src="@mipmap/tab_live_normal" />
 
-            <TextView
-                style="@style/TextBlackXLarge"
+            <Button
+                android:id="@+id/btn_login_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img_person_login"
                 android:layout_centerHorizontal="true"
+                android:background="@color/common_main_orange"
                 android:text="登录"
                 android:textColor="@color/white" />
         </RelativeLayout>
